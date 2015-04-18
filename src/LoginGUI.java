@@ -2,14 +2,14 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class LoginGui {
+public class LoginGUI {
 	private JFrame logInFrame;
 	private JLabel topLabel, userNameLabel, passwordLabel;
 	private JPanel logInPanel;
 	private JButton createNewAccount, signIn;
 	private JTextField userName;
 	private JPasswordField passwordField;
-	public LoginGui(){
+	public LoginGUI(){
 		logInFrame = new JFrame("Efferent Patient Care System");
 		
 		logInPanel = new JPanel(new GridBagLayout());
@@ -65,6 +65,6 @@ public class LoginGui {
 		
 	}
 	public static void main(String[] args){
-		new LoginGui();
+		new LoginGUI();
 	}
 }
