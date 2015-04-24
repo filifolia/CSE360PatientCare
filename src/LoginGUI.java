@@ -16,6 +16,7 @@ public class LoginGUI {
 	private static ButtonGroup patientDoctorButtonGroup;
 	private static JRadioButton patientRadio, doctorRadio;
 	private static UserList users = new UserList();
+	private static User newUser = new User(); //Temporary user object that will be used for sign up
 	
 	
 	public LoginGUI(){
@@ -272,15 +273,14 @@ public class LoginGUI {
 					errorMessage.setForeground(Color.RED);
 
 				}
-				else if(users.existingUsername(userName.getText()) == true){
+				else if(users.existingUsername(userName.getText()) == true){ //Checks hash table if the username exist
 					errorMessage.setText("Username already exist in the database.");
 					errorMessage.setForeground(Color.RED);
 				}
-				/*
-				else if(false){//Eventually should be used to check if user name is taken.
-				}
-				*/
+
 				else{ //Create the account.
+					newUser.setUsername(userName.getText()); //Set the user's username
+					newUser.setPassword(password); //Set the user's password
 					if(patientRadio.isSelected()){
 						patientUserInformationGUI();
 						logInFrame1.setVisible(false);	
@@ -295,9 +295,9 @@ public class LoginGUI {
 		});
 	}
 	public static void patientUserInformationGUI(){
-		JLabel userInformationLabel, requiredLabel, firstNameLabel, lastNameLabel, middleInitialLabel, ageLabel, heightLabel, ethnicityLabel, medicalConditionLabel;
+		JLabel userInformationLabel, requiredLabel, firstNameLabel, lastNameLabel, middleInitialLabel, ageLabel, heightLabel, weightLabel, medicalConditionLabel;
 		JPanel userInformationPanel;
-		JTextField firstNameField, lastNameField, middleInitialField, ageField, heightField, ethnicityField, medicalConditionField;
+		JTextField firstNameField, lastNameField, middleInitialField, ageField, heightField, weightField, medicalConditionField;
 		JButton submitButton;
 		
 		//Frame
@@ -314,7 +314,7 @@ public class LoginGUI {
 		middleInitialLabel = new JLabel("Middle Initial:");
 		ageLabel = new JLabel("*Age:");
 		heightLabel = new JLabel("Height:");
-		ethnicityLabel = new JLabel("Ethnicity:");
+		weightLabel = new JLabel("Weight:");
 		medicalConditionLabel = new JLabel("Medical Condition:");
 		requiredLabel = new JLabel("* = required field");
 		errorMessage = new JLabel(""); //Set it to be blank at first.
@@ -330,7 +330,7 @@ public class LoginGUI {
 		middleInitialField = new JTextField(10);
 		ageField = new JTextField(10);
 		heightField = new JTextField(10);
-		ethnicityField = new JTextField(10);
+		weightField = new JTextField(10);
 		medicalConditionField = new JTextField(10);
 		
 		//Panel
@@ -376,10 +376,10 @@ public class LoginGUI {
 		userInformationPanel.add(heightField, c);
 		c.gridx = 0;
 		c.gridy = 7;
-		userInformationPanel.add(ethnicityLabel, c);
+		userInformationPanel.add(weightLabel, c);
 		c.gridx = 1;
 		c.gridy = 7;
-		userInformationPanel.add(ethnicityField, c);
+		userInformationPanel.add(weightField, c);
 		c.gridx = 0;
 		c.gridy = 8;
 		userInformationPanel.add(medicalConditionLabel, c);
@@ -430,6 +430,11 @@ public class LoginGUI {
 				}
 				else{
 					//Actually make the new user account.
+					newUser.setFirstName(firstNameField.getText());
+					newUser.setLastName(firstNameField.getText());
+					newUser.setAge(Integer.parseInt(ageField.getText()));
+					newUser.setWeight(Integer.parseInt(weightField.getText()));
+					newUser.setHeight(Integer.parseInt(heightField.getText()));
 				}
 			}
 		});
