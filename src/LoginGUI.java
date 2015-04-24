@@ -15,6 +15,8 @@ public class LoginGUI {
 	private static JPasswordField passwordField, confirmPasswordField;
 	private static ButtonGroup patientDoctorButtonGroup;
 	private static JRadioButton patientRadio, doctorRadio;
+	private static UserList users = new UserList();
+	
 	
 	public LoginGUI(){
 		logInFrame = new JFrame("Efferent Patient Care System");
@@ -250,14 +252,29 @@ public class LoginGUI {
 					confirmPasswordField.setBackground(Color.YELLOW);
 					fieldsAreFilled = false;
 				}
+				if(password.length() < 4){
+					passwordField.setBackground(Color.YELLOW);
+					confirmPasswordField.setBackground(Color.YELLOW);
+				}
+				if(users.existingUsername(userName.getText()) == true){
+					userName.setBackground(Color.YELLOW);
+				}
 				if(!fieldsAreFilled){ //Will be true, if one of the above fields is empty.
 					errorMessage.setText("Highlighted fields are required."); //Display an error message via a label.
 					errorMessage.setForeground(Color.RED); //Nothing says "ERROR" like the color red.
+				}
+				else if(password.length() < 4) { //Password needs to be equal or longer than 4 characters
+					errorMessage.setText("Password needs to be longer than 3 characters.");
+					errorMessage.setForeground(Color.RED);
 				}
 				else if(!password.equals(confirmPassword)){ //Will be true when password != confirmPassword
 					errorMessage.setText("Passwords did not match.");
 					errorMessage.setForeground(Color.RED);
 
+				}
+				else if(users.existingUsername(userName.getText()) == true){
+					errorMessage.setText("Username already exist in the database.");
+					errorMessage.setForeground(Color.RED);
 				}
 				/*
 				else if(false){//Eventually should be used to check if user name is taken.
@@ -522,7 +539,6 @@ public class LoginGUI {
 			public void actionPerformed(ActionEvent e){
 				//Check if any of the required fields are left blank.
 				Boolean fieldsAreFilled = true; //We assume all the fields are filled until we've been proven wrong.
-				Boolean shortFirstName = false; //The name is too short
 				firstNameField.setBackground(Color.WHITE);
 				lastNameField.setBackground(Color.WHITE);
 				ageField.setBackground(Color.WHITE);
@@ -531,10 +547,6 @@ public class LoginGUI {
 				if(firstNameField.getText().isEmpty()){
 					firstNameField.setBackground(Color.YELLOW);
 					fieldsAreFilled = false;
-				}
-				if(firstNameField.getText().length() < 4){
-					firstNameField.setBackground(Color.GREEN);
-					shortFirstName = true;
 				}
 				if(lastNameField.getText().isEmpty()){
 					lastNameField.setBackground(Color.YELLOW);
@@ -549,7 +561,7 @@ public class LoginGUI {
 					fieldsAreFilled = false;
 				}
 				if(!fieldsAreFilled){ //Will be true if one of the required fields is empty.
-					errorMessage.setText("Highlighted fields are required!");
+					errorMessage.setText("Highlighted fields are required.");
 					errorMessage.setForeground(Color.RED);
 				}
 				else if(!middleInitialField.getText().isEmpty() && middleInitialField.getText().length() != 1){
@@ -558,13 +570,9 @@ public class LoginGUI {
 					errorMessage.setForeground(Color.RED);
 				}
 				else if(!isANumber(ageField.getText())){//Check if string is a number.
-					errorMessage.setText("Age must be a number!");
+					errorMessage.setText("Age must be a number.");
 					errorMessage.setForeground(Color.RED);
 				}
-				else if(!firstNameField.getText().isEmpty() && shortFirstName == true){ 
-					errorMessage.setText("Name too short.");
-					errorMessage.setForeground(Color.RED);
-				    }
 				else{
 					//Actually make the new user account.
 				}
