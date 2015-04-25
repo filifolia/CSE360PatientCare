@@ -16,7 +16,7 @@ public class PatientGUI {
     private JSlider pSlider, dSlider, nSlider, aSlider, depSlider;
     private JFrame patFrame;
     private JList list1;
-    private JButton submit;
+    private JButton submit,edit;
     private DefaultListModel model;
     private final int lowVal = 0,highVal = 10, defaultVal = 5; 
     
@@ -83,17 +83,19 @@ public class PatientGUI {
             
             panel2 = new JPanel();                          //Our user info panel
             panel2.setLayout(new GridLayout(10,1));
-            patName = new JLabel("Your name: ");
-            patAge = new JLabel("Your current age: ");
+            patName = new JLabel("Your full name is: ");
+            patAge = new JLabel("Your current age is: ");
             phoNum = new JLabel("Your phone number is: ");
-            patStatus = new JLabel("Your current affliction is: ");
-            medList = new JLabel("Your current medications are: ");
+            patStatus = new JLabel("Your current height is: ");
+            medList = new JLabel("Your current weight is: ");
+            edit = new JButton("Edit User Info");
             
             panel2.add(patName);
             panel2.add(patAge);
             panel2.add(phoNum);
             panel2.add(patStatus);
             panel2.add(medList);
+            panel2.add(edit);
             
             panel3 = new JPanel();                              //Our view report panel
             panel3.setLayout(new GridLayout(1,1));
@@ -112,7 +114,81 @@ public class PatientGUI {
            patFrame.setVisible(true);
            patFrame.setSize(600,600);
            patFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+           
+            edit.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        editPatGUI();
+                        patFrame.setVisible(false);
+                    }
+                   
+               });
     }
+    
+    public static void editPatGUI()  //Edit Panel
+  {
+      JFrame editFrame = new JFrame("Patient Access");
+      GridBagConstraints c = new GridBagConstraints();
+      JPanel editPan = new JPanel(new GridBagLayout());
+      
+      JTextField name = new JTextField(10);
+      JTextField number = new JTextField(10);
+      JTextField nHeight = new JTextField(10);
+      JTextField nWeight = new JTextField(10);
+      JTextField nAge = new JTextField(10);
+      JButton submitR = new JButton("Submit Changes");
+      JButton cancel = new JButton("Cancel");
+      
+      JLabel editName = new JLabel("Enter your edited name: ");
+      JLabel editNum = new JLabel("Enter your new phone number: ");
+      JLabel editHeight = new JLabel("Enter your adjusted height: ");
+      JLabel editWeight = new JLabel("Enter your adjusted weight: ");
+      JLabel editAge = new JLabel("Enter your age: ");
+      
+      c.gridx = 0;
+      c.gridy = 1;
+      c.insets = new Insets(10, 10, 10, 10);
+      editPan.add(editName,c);
+      c.gridx = 1;
+      c.gridy = 1;
+      editPan.add(name,c);
+      c.gridx = 0;
+      c.gridy = 2;
+      editPan.add(editNum,c);
+      c.gridx = 1;
+      c.gridy = 2;
+      editPan.add(number,c);
+      c.gridx = 0;
+      c.gridy = 3;
+      editPan.add(editHeight,c);
+      c.gridx = 1;
+      c.gridy = 3;
+      editPan.add(nHeight,c);
+      c.gridx = 0;
+      c.gridy = 4;
+      editPan.add(editWeight,c);
+      c.gridx = 1;
+      c.gridy = 4;
+      editPan.add(nWeight,c);
+      c.gridx = 0;
+      c.gridy = 5;
+      editPan.add(editAge,c);
+      c.gridx = 1;
+      c.gridy = 5;
+      editPan.add(nAge,c);
+      c.gridx = 0;
+      c.gridy = 6;
+      editPan.add(submitR,c);
+      c.gridx = 1;
+      c.gridy = 6;
+      editPan.add(cancel,c);
+      
+      editFrame.add(editPan);
+      editFrame.setVisible(true);
+      editFrame.setSize(600,600);
+      editFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  }
+   
     public static void main(String[] args) {
         new PatientGUI();
     }
