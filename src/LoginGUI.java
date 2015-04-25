@@ -19,7 +19,7 @@ public class LoginGUI extends JPanel{
 	private static ButtonGroup patientDoctorButtonGroup;
 	private static JRadioButton patientRadio, doctorRadio;
 	private static UserList users = new UserList();
-	private BufferedImage image;
+	private static BufferedImage image;
 	private static User newUser; //Temporary user object that will be used for sign up
 	
 	
@@ -168,9 +168,18 @@ public class LoginGUI extends JPanel{
 	//GUI for signing up for a new account.
 	public static void signUpGUI(){
 		logInFrame1 = new JFrame("Efferent Patient Care System");
-		
+		ImagePanel = new JPanel(new BorderLayout());
 		logInPanel = new JPanel(new GridBagLayout());
 		
+		//Image
+		try {
+			image = ImageIO.read(new File("src/effecent.png"));
+		} catch (IOException e1) {
+			System.out.println("image broken");
+			e1.printStackTrace();
+		}
+		JLabel effecentPic = new JLabel(new ImageIcon(image));
+				
 		//Labels
 		topLabel = new JLabel("Patient/Doctor Sign Up"); //Appears above the two text boxes
 		userNameLabel = new JLabel("New User Name"); //Appears to the left of the top text box
@@ -194,7 +203,7 @@ public class LoginGUI extends JPanel{
 		GridBagConstraints c = new GridBagConstraints(); //Used for arranging things on the panel.
 
 		logInFrame1.setVisible(true);
-		logInFrame1.setSize(400, 400);
+		logInFrame1.setSize(650, 410);
 		logInFrame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		logInFrame1.setLocationRelativeTo(null);
 
@@ -244,7 +253,9 @@ public class LoginGUI extends JPanel{
 		c.gridy = 4;
 		logInPanel.add(signIn, c);*/
 		
-		logInFrame1.add(logInPanel); //Add the panel to the frame. 
+		ImagePanel.add(logInPanel, BorderLayout.EAST);
+		ImagePanel.add(effecentPic, BorderLayout.WEST);
+		logInFrame1.add(ImagePanel); //Add the panel to the frame. 
 		
 		createNewAccount.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -323,10 +334,19 @@ public class LoginGUI extends JPanel{
 		JTextField firstNameField, lastNameField, middleInitialField, ageField, heightField, weightField, phoneField;
 		JButton submitButton;
 		
+		//Image
+		try {
+			image = ImageIO.read(new File("src/effecent.png"));
+		} catch (IOException e1) {
+			System.out.println("image broken");			
+			e1.printStackTrace();
+		}
+		JLabel effecentPic = new JLabel(new ImageIcon(image));
+		
 		//Frame
 		userInformationFrame = new JFrame("Efferent Patient Care System");
 		userInformationFrame.setVisible(true);
-		userInformationFrame.setSize(400, 450);
+		userInformationFrame.setSize(650, 450);
 		userInformationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		userInformationFrame.setLocationRelativeTo(null);
 
@@ -357,6 +377,7 @@ public class LoginGUI extends JPanel{
 		phoneField = new JTextField(10);
 		
 		//Panel
+		ImagePanel = new JPanel(new BorderLayout());
 		GridBagConstraints c = new GridBagConstraints(); //Used for arranging things on the panel.
 		userInformationPanel = new JPanel(new GridBagLayout());
 		
@@ -416,7 +437,9 @@ public class LoginGUI extends JPanel{
 		c.gridy = 9;
 		userInformationPanel.add(submitButton, c);
 		
-		userInformationFrame.add(userInformationPanel); //Add the panel to the frame. 
+		ImagePanel.add(userInformationPanel, BorderLayout.EAST);
+		ImagePanel.add(effecentPic, BorderLayout.WEST);
+		userInformationFrame.add(ImagePanel); //Add the panel to the frame. 
 		
 		submitButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
