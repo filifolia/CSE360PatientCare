@@ -1,4 +1,3 @@
-package doctorgui;
 import java.awt.*;
 import javax.swing.*;
 /**

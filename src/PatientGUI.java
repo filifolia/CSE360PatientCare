@@ -1,4 +1,3 @@
-package patientgui;
 import java.awt.*;
 import javax.swing.*;
 

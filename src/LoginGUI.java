@@ -16,7 +16,7 @@ public class LoginGUI {
 	private static ButtonGroup patientDoctorButtonGroup;
 	private static JRadioButton patientRadio, doctorRadio;
 	private static UserList users = new UserList();
-	private static User newUser = new User(); //Temporary user object that will be used for sign up
+	private static User newUser; //Temporary user object that will be used for sign up
 	
 	
 	public LoginGUI(){
@@ -104,6 +104,7 @@ public class LoginGUI {
 		//CREATE NEW ACCOUNT - action listener
 		createNewAccount.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
+					newUser = new User();
 					signUpGUI();
 					logInFrame.setVisible(false); //Hide that first frame - the log-in one.
 				}
@@ -134,7 +135,8 @@ public class LoginGUI {
 					
 					//This is the kind of if statement that could be used here. 
 					if(patientRadio.isSelected()){ //User selected "Patient"
-						
+						new PatientGUI();
+						logInFrame.setVisible(false);
 					}
 					else{ //User selected "Doctor".
 						//this.dispose();
@@ -257,27 +259,32 @@ public class LoginGUI {
 					passwordField.setBackground(Color.YELLOW);
 					confirmPasswordField.setBackground(Color.YELLOW);
 				}
-				if(users.existingUsername(userName.getText()) == true){
+				/*
+				if(!userName.getText().isEmpty() && users.existingUsername(userName.getText()) == true){
 					userName.setBackground(Color.YELLOW);
 				}
+				*/
 				if(!fieldsAreFilled){ //Will be true, if one of the above fields is empty.
 					errorMessage.setText("Highlighted fields are required."); //Display an error message via a label.
 					errorMessage.setForeground(Color.RED); //Nothing says "ERROR" like the color red.
 				}
 				else if(password.length() < 4) { //Password needs to be equal or longer than 4 characters
-					errorMessage.setText("Password needs to be longer than 3 characters.");
+					errorMessage.setText("Password too short.");
 					errorMessage.setForeground(Color.RED);
 				}
 				else if(!password.equals(confirmPassword)){ //Will be true when password != confirmPassword
 					errorMessage.setText("Passwords did not match.");
+					passwordField.setBackground(Color.YELLOW);
+					confirmPasswordField.setBackground(Color.YELLOW);
 					errorMessage.setForeground(Color.RED);
 
 				}
+				/*
 				else if(users.existingUsername(userName.getText()) == true){ //Checks hash table if the username exist
 					errorMessage.setText("Username already exist in the database.");
 					errorMessage.setForeground(Color.RED);
 				}
-
+				*/
 				else{ //Create the account.
 					newUser.setUsername(userName.getText()); //Set the user's username
 					newUser.setPassword(password); //Set the user's password
@@ -295,9 +302,9 @@ public class LoginGUI {
 		});
 	}
 	public static void patientUserInformationGUI(){
-		JLabel userInformationLabel, requiredLabel, firstNameLabel, lastNameLabel, middleInitialLabel, ageLabel, heightLabel, weightLabel, medicalConditionLabel;
+		JLabel userInformationLabel, requiredLabel, firstNameLabel, lastNameLabel, middleInitialLabel, ageLabel, heightLabel, weightLabel, phoneLabel;
 		JPanel userInformationPanel;
-		JTextField firstNameField, lastNameField, middleInitialField, ageField, heightField, weightField, medicalConditionField;
+		JTextField firstNameField, lastNameField, middleInitialField, ageField, heightField, weightField, phoneField;
 		JButton submitButton;
 		
 		//Frame
@@ -313,9 +320,9 @@ public class LoginGUI {
 		lastNameLabel = new JLabel("*Last Name:");
 		middleInitialLabel = new JLabel("Middle Initial:");
 		ageLabel = new JLabel("*Age:");
-		heightLabel = new JLabel("Height:");
-		weightLabel = new JLabel("Weight:");
-		medicalConditionLabel = new JLabel("Medical Condition:");
+		heightLabel = new JLabel("*Height:");
+		weightLabel = new JLabel("*Weight:");
+		phoneLabel = new JLabel("*Phone Number:");
 		requiredLabel = new JLabel("* = required field");
 		errorMessage = new JLabel(""); //Set it to be blank at first.
 
@@ -331,7 +338,7 @@ public class LoginGUI {
 		ageField = new JTextField(10);
 		heightField = new JTextField(10);
 		weightField = new JTextField(10);
-		medicalConditionField = new JTextField(10);
+		phoneField = new JTextField(10);
 		
 		//Panel
 		GridBagConstraints c = new GridBagConstraints(); //Used for arranging things on the panel.
@@ -382,10 +389,10 @@ public class LoginGUI {
 		userInformationPanel.add(weightField, c);
 		c.gridx = 0;
 		c.gridy = 8;
-		userInformationPanel.add(medicalConditionLabel, c);
+		userInformationPanel.add(phoneLabel, c);
 		c.gridx = 1;
 		c.gridy = 8;
-		userInformationPanel.add(medicalConditionField, c);
+		userInformationPanel.add(phoneField, c);
 		c.gridx = 0;
 		c.gridy = 9;
 		userInformationPanel.add(requiredLabel, c);
@@ -415,6 +422,18 @@ public class LoginGUI {
 					ageField.setBackground(Color.YELLOW);
 					fieldsAreFilled = false;				
 				}
+				if(heightField.getText().isEmpty()){
+					heightField.setBackground(Color.YELLOW);
+					fieldsAreFilled = false;				
+				}
+				if(weightField.getText().isEmpty()){
+					weightField.setBackground(Color.YELLOW);
+					fieldsAreFilled = false;				
+				}
+				if(phoneField.getText().isEmpty()){
+					phoneField.setBackground(Color.YELLOW);
+					fieldsAreFilled = false;				
+				}
 				if(!fieldsAreFilled){ //Will be true if one of the required fields is empty.
 					errorMessage.setText("Highlighted fields are required.");
 					errorMessage.setForeground(Color.RED);
@@ -422,6 +441,10 @@ public class LoginGUI {
 				else if(!middleInitialField.getText().isEmpty() && middleInitialField.getText().length() != 1){
 					//Checking if middle initial is one letter.
 					errorMessage.setText("Middle initial must be one letter.");
+					errorMessage.setForeground(Color.RED);
+				}
+				else if(!isANumber(phoneField.getText())){//Check if string is a number.
+					errorMessage.setText("Phone must be numbers.");
 					errorMessage.setForeground(Color.RED);
 				}
 				else if(!isANumber(ageField.getText())){//Check if string is a number.
@@ -435,6 +458,10 @@ public class LoginGUI {
 					newUser.setAge(Integer.parseInt(ageField.getText()));
 					newUser.setWeight(Integer.parseInt(weightField.getText()));
 					newUser.setHeight(Integer.parseInt(heightField.getText()));
+					newUser.setPhone(phoneField.getText());
+					users.addElement(newUser); //Adds the user to the hash table
+					new LoginGUI();
+					userInformationFrame.setVisible(false);
 				}
 			}
 		});
@@ -598,6 +625,7 @@ public class LoginGUI {
 		return true;
 	}
 	public static void main(String[] args){
+		
 		new LoginGUI();
 	}
 }

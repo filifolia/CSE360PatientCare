@@ -32,7 +32,8 @@ public class UserList
 			hash2 = hash + name.hashCode() % code.hashCode();
 			hash = hash1 + hash2;
 		}
-		hash = hash%size;
+		hash = hash % size;
+		hash = Math.abs(hash);
 		return hash;
 	}
 	
