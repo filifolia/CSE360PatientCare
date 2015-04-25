@@ -20,7 +20,7 @@ public class LoginGUI extends JPanel{
 	private static JRadioButton patientRadio, doctorRadio;
 	private static UserList users = new UserList();
 	private static BufferedImage image;
-	private static User newUser; //Temporary user object that will be used for sign up
+	private static User newUser, currentUser; //Temporary user object that will be used for sign up
 	
 	
 	public LoginGUI(){
@@ -151,8 +151,21 @@ public class LoginGUI extends JPanel{
 					
 					//This is the kind of if statement that could be used here. 
 					if(patientRadio.isSelected()){ //User selected "Patient"
-						new PatientGUI();
-						logInFrame.setVisible(false);
+						int checkIt = users.searchByUsername(userName.getText());
+						if(checkIt == -1){ //Account doesn't exist
+							errorMessage.setText("Account does not exist."); //Display an error message via a label.
+							errorMessage.setForeground(Color.RED); //Nothing says "ERROR" like the color red.
+						}
+						else if(users.getUser(checkIt).getPassword() != password){ //Invalid password
+							errorMessage.setText("Wrong password."); //Display an error message via a label.
+							errorMessage.setForeground(Color.RED); //Nothing says "ERROR" like the color red.
+						}
+						else { //Account exist
+							currentUser = users.getUser(checkIt); //Assigns the user object to currentUser
+							new PatientGUI();
+							logInFrame.setVisible(false);
+						}
+						
 					}
 					else{ //User selected "Doctor".
 						//this.dispose();
@@ -298,7 +311,6 @@ public class LoginGUI extends JPanel{
 				}
 				else if(!password.equals(confirmPassword)){ //Will be true when password != confirmPassword
 					errorMessage.setText("Passwords did not match.");
-
 					confirmPasswordField.setBackground(Color.YELLOW);
 					errorMessage.setForeground(Color.RED);
 

@@ -103,4 +103,16 @@ public class UserList
 		return position;		
 	}
 	
+	//Getter method that access an element in the table according to the index parameter
+	public User getUser(int index)
+	{
+		return List[index];
+	}
+	
+	//Saves all detail of exisitng users to a text save file
+	public void saveUserFile()
+	{
+		
+	}
+	
 }
