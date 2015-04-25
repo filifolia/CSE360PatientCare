@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/effecent.png</name>
+			<type>1</type>
+			<location>C:/Users/Asus A46 C os7/git/CSE360PatientCare/src/effecent.png</location>
+		</link>
+	</linkedResources>
 </projectDescription>

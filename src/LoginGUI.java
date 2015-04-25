@@ -3,26 +3,39 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.*;
+import java.io.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class LoginGUI {
+public class LoginGUI extends JPanel{
 	private static JFrame logInFrame, logInFrame1, userInformationFrame;
 	private static JLabel topLabel, userNameLabel, passwordLabel, confirmPasswordLabel, typeLabel, errorMessage;
-	private static JPanel logInPanel;
+	private static JPanel logInPanel, ImagePanel;
 	private static JButton createNewAccount, signIn;
 	private static JTextField userName;
 	private static JPasswordField passwordField, confirmPasswordField;
 	private static ButtonGroup patientDoctorButtonGroup;
 	private static JRadioButton patientRadio, doctorRadio;
 	private static UserList users = new UserList();
+	private BufferedImage image;
 	private static User newUser; //Temporary user object that will be used for sign up
 	
 	
 	public LoginGUI(){
 		logInFrame = new JFrame("Efferent Patient Care System");
-		
+		ImagePanel = new JPanel(new BorderLayout());
 		logInPanel = new JPanel(new GridBagLayout());
+		
+		//Image
+		try {
+			image = ImageIO.read(new File("src/effecent.png"));
+		} catch (IOException e1) {
+			System.out.println("image broken");
+			e1.printStackTrace();
+		}
+		JLabel effecentPic = new JLabel(new ImageIcon(image));
 		
 		//Labels
 		topLabel = new JLabel("Patient/Doctor Sign In"); //Appears above the two text boxes
@@ -55,7 +68,7 @@ public class LoginGUI {
 		GridBagConstraints c = new GridBagConstraints(); //Used for arranging things on the panel.
 
 		logInFrame.setVisible(true);
-		logInFrame.setSize(400, 400);
+		logInFrame.setSize(650, 410);
 		logInFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		logInFrame.setLocationRelativeTo(null);
 		//logInFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -99,7 +112,10 @@ public class LoginGUI {
 		c.gridy = 6;
 		logInPanel.add(signIn, c);
 		
-		logInFrame.add(logInPanel); //Add the panel to the frame. 
+		ImagePanel.add(effecentPic, BorderLayout.WEST);
+		ImagePanel.add(logInPanel, BorderLayout.EAST);
+		
+		logInFrame.add(ImagePanel); //Add the panel to the frame. 
 		
 		//CREATE NEW ACCOUNT - action listener
 		createNewAccount.addActionListener(new ActionListener(){
@@ -259,11 +275,11 @@ public class LoginGUI {
 					passwordField.setBackground(Color.YELLOW);
 					confirmPasswordField.setBackground(Color.YELLOW);
 				}
-				/*
-				if(!userName.getText().isEmpty() && users.existingUsername(userName.getText()) == true){
+				
+				if(!userName.getText().isEmpty() && users.searchByUsername(userName.getText()) != -1){
 					userName.setBackground(Color.YELLOW);
 				}
-				*/
+				
 				if(!fieldsAreFilled){ //Will be true, if one of the above fields is empty.
 					errorMessage.setText("Highlighted fields are required."); //Display an error message via a label.
 					errorMessage.setForeground(Color.RED); //Nothing says "ERROR" like the color red.
@@ -279,12 +295,12 @@ public class LoginGUI {
 					errorMessage.setForeground(Color.RED);
 
 				}
-				/*
-				else if(users.existingUsername(userName.getText()) == true){ //Checks hash table if the username exist
+				
+				else if(!userName.getText().isEmpty() && users.searchByUsername(userName.getText()) != -1){ //Checks hash table if the username exist
 					errorMessage.setText("Username already exist in the database.");
 					errorMessage.setForeground(Color.RED);
 				}
-				*/
+				
 				else{ //Create the account.
 					newUser.setUsername(userName.getText()); //Set the user's username
 					newUser.setPassword(password); //Set the user's password
