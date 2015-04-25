@@ -74,10 +74,12 @@ public class UserList
 		int position = -1;
 		for(int i=0; i<100; i++)
 		{
-			if(List[i].getUsername().equals(username))						//If found
-			{
-				position = i;
-				i = 100;													//breaks loop
+			if(List[i] != null){												//The array isn't null		
+				if(List[i].getUsername().equals(username))						//If found
+				{
+					position = i;
+					i = 100;													//breaks loop
+				}
 			}
 		}
 		return position;
@@ -90,32 +92,15 @@ public class UserList
 		int position = -1;
 		for(int i=0; i<100; i++)
 		{
-			if(List[i].getFirstName().equals(first)&&List[i].getLastName().equals(last))	//If found
-			{
-				position = i;
-				i = 100;													//breaks loop
+			if(List[i] != null){
+				if(List[i].getFirstName().equals(first)&&List[i].getLastName().equals(last))	//If found
+				{
+					position = i;
+					i = 100;																	//breaks loop
+				}
 			}
 		}
 		return position;		
 	}
 	
-	//Search for existing username and returns true if it exists
-	public boolean existingUsername(String username)
-	{
-		int position = -1;
-		for(int i=0; i<100; i++)
-		{
-			if(List[i].getUsername().equals(username))						//If found
-			{
-				position = i;
-				i = 100;													//breaks loop
-			}
-		}
-		if (position != -1){
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
 }
