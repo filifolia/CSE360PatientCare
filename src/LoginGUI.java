@@ -25,7 +25,7 @@ public class LoginGUI extends JPanel{
 	
 	public LoginGUI(){
 		logInFrame = new JFrame("Efferent Patient Care System");
-		ImagePanel = new JPanel(new BorderLayout());
+		ImagePanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 10, 10));
 		logInPanel = new JPanel(new GridBagLayout());
 		
 		//Image
@@ -68,7 +68,7 @@ public class LoginGUI extends JPanel{
 		GridBagConstraints c = new GridBagConstraints(); //Used for arranging things on the panel.
 
 		logInFrame.setVisible(true);
-		logInFrame.setSize(650, 410);
+		logInFrame.setSize(730, 450);
 		logInFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		logInFrame.setLocationRelativeTo(null);
 		//logInFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -112,8 +112,8 @@ public class LoginGUI extends JPanel{
 		c.gridy = 6;
 		logInPanel.add(signIn, c);
 		
-		ImagePanel.add(effecentPic, BorderLayout.WEST);
-		ImagePanel.add(logInPanel, BorderLayout.EAST);
+		ImagePanel.add(effecentPic);
+		ImagePanel.add(logInPanel);
 		
 		logInFrame.add(ImagePanel); //Add the panel to the frame. 
 		
@@ -168,7 +168,7 @@ public class LoginGUI extends JPanel{
 	//GUI for signing up for a new account.
 	public static void signUpGUI(){
 		logInFrame1 = new JFrame("Efferent Patient Care System");
-		ImagePanel = new JPanel(new BorderLayout());
+		ImagePanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 10, 10));
 		logInPanel = new JPanel(new GridBagLayout());
 		
 		//Image
@@ -203,7 +203,7 @@ public class LoginGUI extends JPanel{
 		GridBagConstraints c = new GridBagConstraints(); //Used for arranging things on the panel.
 
 		logInFrame1.setVisible(true);
-		logInFrame1.setSize(650, 410);
+		logInFrame1.setSize(730, 450);
 		logInFrame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		logInFrame1.setLocationRelativeTo(null);
 
@@ -253,8 +253,8 @@ public class LoginGUI extends JPanel{
 		c.gridy = 4;
 		logInPanel.add(signIn, c);*/
 		
-		ImagePanel.add(logInPanel, BorderLayout.EAST);
-		ImagePanel.add(effecentPic, BorderLayout.WEST);
+		ImagePanel.add(effecentPic);
+		ImagePanel.add(logInPanel);
 		logInFrame1.add(ImagePanel); //Add the panel to the frame. 
 		
 		createNewAccount.addActionListener(new ActionListener(){
@@ -282,10 +282,6 @@ public class LoginGUI extends JPanel{
 					confirmPasswordField.setBackground(Color.YELLOW);
 					fieldsAreFilled = false;
 				}
-				if(password.length() < 4){
-					passwordField.setBackground(Color.YELLOW);
-					confirmPasswordField.setBackground(Color.YELLOW);
-				}
 				
 				if(!userName.getText().isEmpty() && users.searchByUsername(userName.getText()) != -1){
 					userName.setBackground(Color.YELLOW);
@@ -297,11 +293,12 @@ public class LoginGUI extends JPanel{
 				}
 				else if(password.length() < 4) { //Password needs to be equal or longer than 4 characters
 					errorMessage.setText("Password too short.");
+					passwordField.setBackground(Color.YELLOW);
 					errorMessage.setForeground(Color.RED);
 				}
 				else if(!password.equals(confirmPassword)){ //Will be true when password != confirmPassword
 					errorMessage.setText("Passwords did not match.");
-					passwordField.setBackground(Color.YELLOW);
+
 					confirmPasswordField.setBackground(Color.YELLOW);
 					errorMessage.setForeground(Color.RED);
 
@@ -346,7 +343,7 @@ public class LoginGUI extends JPanel{
 		//Frame
 		userInformationFrame = new JFrame("Efferent Patient Care System");
 		userInformationFrame.setVisible(true);
-		userInformationFrame.setSize(650, 450);
+		userInformationFrame.setSize(730, 450);
 		userInformationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		userInformationFrame.setLocationRelativeTo(null);
 
@@ -377,7 +374,7 @@ public class LoginGUI extends JPanel{
 		phoneField = new JTextField(10);
 		
 		//Panel
-		ImagePanel = new JPanel(new BorderLayout());
+		ImagePanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 10, 10));
 		GridBagConstraints c = new GridBagConstraints(); //Used for arranging things on the panel.
 		userInformationPanel = new JPanel(new GridBagLayout());
 		
@@ -437,8 +434,8 @@ public class LoginGUI extends JPanel{
 		c.gridy = 9;
 		userInformationPanel.add(submitButton, c);
 		
-		ImagePanel.add(userInformationPanel, BorderLayout.EAST);
-		ImagePanel.add(effecentPic, BorderLayout.WEST);
+		ImagePanel.add(effecentPic);
+		ImagePanel.add(userInformationPanel);		
 		userInformationFrame.add(ImagePanel); //Add the panel to the frame. 
 		
 		submitButton.addActionListener(new ActionListener(){
@@ -446,8 +443,12 @@ public class LoginGUI extends JPanel{
 				//Check if any of the required fields are left blank.
 				Boolean fieldsAreFilled = true; //We assume all the fields are filled until we've been proven wrong.
 				firstNameField.setBackground(Color.WHITE);
+				middleInitialField.setBackground(Color.WHITE);
 				lastNameField.setBackground(Color.WHITE);
 				ageField.setBackground(Color.WHITE);
+				heightField.setBackground(Color.WHITE);
+				weightField.setBackground(Color.WHITE);
+				phoneField.setBackground(Color.WHITE);
 				
 				if(firstNameField.getText().isEmpty()){
 					firstNameField.setBackground(Color.YELLOW);
@@ -479,6 +480,7 @@ public class LoginGUI extends JPanel{
 				}
 				else if(!middleInitialField.getText().isEmpty() && middleInitialField.getText().length() != 1){
 					//Checking if middle initial is one letter.
+					middleInitialField.setBackground(Color.YELLOW);
 					errorMessage.setText("Middle initial must be one letter.");
 					errorMessage.setForeground(Color.RED);
 				}
