@@ -3,7 +3,9 @@
 //to store users, since this program is meant to cover long term and chronic
 //illnesses. 
 
-public class UserList 
+import java.io.Serializable;
+
+public class UserList implements Serializable
 {
 	private User[] List;
 	final private int size = 100;
