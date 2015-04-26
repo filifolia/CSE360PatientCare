@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class User 
+public class User implements Serializable
 {
 	private String username;
 	private String firstName;
@@ -48,7 +48,7 @@ public class User
 	{
 		age = num;
 	}
-	public void setWeight(float num)
+	public void setweight(float num)
 	{
 		weight = num;
 	}
