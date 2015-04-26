@@ -1,24 +1,28 @@
-public class Patient extends User
+import java.io.Serializable;
+
+public class Patient extends User implements Serializable
 {
 	private String[] conditions;
 	private String[] medications;
-	//private ReportList reports;
+	private Report[] reports;
 	private int numOfCond;
+	private int numOfReports;
 	private int numOfMeds;
 	private float firstThreshold;
 	private float secondThreshold;
-	//private Reference doctor;
+	private Reference doctor;
 	
 	public Patient()
 	{
 		conditions = new String[5];
 		medications = new String[5];
-		//reports = new ReportList();
+		reports = new Report[100];
 		firstThreshold = 5;
 		secondThreshold = 7;
-		//doctor = new Reference();
+		doctor = new Reference();
 		numOfCond=0;
 		numOfMeds=0;
+		numOfReports = 0;
 	}
 	
 	//ALL setters
@@ -41,7 +45,18 @@ public class Patient extends User
 		return secondThreshold;
 	}
 	
+	//Adding into the Reports array
+	//Returns the location
 	
+	public int addReport(Report newReport)
+	{
+		int location = numOfReports%100;
+		reports[location]=newReport;
+		numOfReports++;
+		return location;
+	}
+	
+	//Search functions for reports
 	//Adding methods to string arrays
 	//Return true if successful, false otherwise
 	public boolean addCondition(String condition)
