@@ -21,7 +21,9 @@ public class LoginGUI extends JPanel{
 	private static UserList users = new UserList();
 	private static BufferedImage image;
 	private static User newUser, currentUser; //Temporary user object that will be used for sign up
-	
+	public static Patient patient = new Patient();
+	public static CareGiver careGiver = new CareGiver();		//These two will keep track of our patient/caregiver info.
+	public static ReportList reportList = new ReportList();
 	
 	public LoginGUI(){
 		logInFrame = new JFrame("Efferent Patient Care System");
@@ -506,13 +508,13 @@ public class LoginGUI extends JPanel{
 				}
 				else{
 					//Actually make the new user account.
-					newUser.setFirstName(firstNameField.getText());
-					newUser.setLastName(firstNameField.getText());
-					newUser.setAge(Integer.parseInt(ageField.getText()));
-					newUser.setWeight(Integer.parseInt(weightField.getText()));
-					newUser.setHeight(Integer.parseInt(heightField.getText()));
-					newUser.setPhone(phoneField.getText());
-					users.addElement(newUser); //Adds the user to the hash table
+					patient.setFirstName(firstNameField.getText());
+					patient.setLastName(firstNameField.getText());
+					patient.setAge(Integer.parseInt(ageField.getText()));
+					patient.setWeight(Integer.parseInt(weightField.getText()));
+					patient.setHeight(Integer.parseInt(heightField.getText()));
+					patient.setPhone(phoneField.getText());
+					users.addElement(patient); //Adds the user to the hash table
 					new LoginGUI();
 					userInformationFrame.setVisible(false);
 				}
@@ -660,6 +662,16 @@ public class LoginGUI extends JPanel{
 				}
 				else{
 					//Actually make the new user account.
+					careGiver.setFirstName(firstNameField.getText());
+					careGiver.setLastName(firstNameField.getText());
+					careGiver.setAge(Integer.parseInt(ageField.getText()));
+					careGiver.setweight(Integer.parseInt(weightField.getText()));
+					careGiver.setHeight(Integer.parseInt(heightField.getText()));
+					careGiver.setDegree(specialtyField.getText());
+					//users.addElement(careGiver); //Adds the user to the hash table. Not sure if Caregivers are also added to hashtable or not.
+					new LoginGUI();
+					userInformationFrame.setVisible(false);
+
 				}
 			}
 		});	
