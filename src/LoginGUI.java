@@ -696,7 +696,7 @@ public class LoginGUI extends JPanel{
 					careGiver.setHeight(Integer.parseInt(heightField.getText()));
 					careGiver.setPhone(phoneField.getText());
 					careGiver.setDegree(specialtyField.getText());
-					//users.addElement(careGiver); //Adds the user to the hash table. Not sure if Caregivers are also added to hashtable or not.
+					DoctorList.addElement(careGiver); //Adds the user to the hash table. Not sure if Caregivers are also added to hashtable or not.
 					new LoginGUI();
 					userInformationFrame.setVisible(false);
 
