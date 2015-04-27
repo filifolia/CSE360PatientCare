@@ -10,7 +10,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class LoginGUI extends JPanel{
-	private static JFrame logInFrame, logInFrame1, userInformationFrame;
+	private static JFrame logInFrame1, userInformationFrame;
+	public static JFrame logInFrame;
 	private static JLabel topLabel, userNameLabel, passwordLabel, confirmPasswordLabel, typeLabel, errorMessage;
 	private static JPanel logInPanel, ImagePanel;
 	private static JButton createNewAccount, signIn;
@@ -164,15 +165,14 @@ public class LoginGUI extends JPanel{
 						}
 						else { //Account exist
 							currentUser = PatientList.getUser(checkIt); //Assigns the user object to currentUser
-							new PatientGUI();
-							logInFrame.setVisible(false);
+							logInFrame.dispose(); //Closes that first frame - the log-in one.
+							new PatientGUI();						
 						}
 						
 					}
 					else{ //User selected "Doctor".
-						//this.dispose();
+						logInFrame.dispose(); //Closes that first frame - the log-in one.
 						new DoctorGUI();
-						logInFrame.setVisible(false); //Hide that first frame - the log-in one.
 					}			
 					
 				}
@@ -340,9 +340,9 @@ public class LoginGUI extends JPanel{
 		});
 	}
 	public static void patientUserInformationGUI(){
-		JLabel userInformationLabel, requiredLabel, firstNameLabel, lastNameLabel, middleInitialLabel, ageLabel, heightLabel, weightLabel, phoneLabel;
+		JLabel userInformationLabel, firstNameLabel, lastNameLabel, ageLabel, heightLabel, weightLabel, phoneLabel;
 		JPanel userInformationPanel;
-		final JTextField firstNameField, lastNameField, middleInitialField, ageField, heightField, weightField, phoneField;
+		final JTextField firstNameField, lastNameField, ageField, heightField, weightField, phoneField;
 		JButton submitButton;
 		
 		//Image
@@ -365,12 +365,10 @@ public class LoginGUI extends JPanel{
 		userInformationLabel = new JLabel("Patient Information");
 		firstNameLabel = new JLabel("First Name:");
 		lastNameLabel = new JLabel("Last Name:");
-		middleInitialLabel = new JLabel("Middle Initial:");
 		ageLabel = new JLabel("Age:");
 		heightLabel = new JLabel("Height:");
 		weightLabel = new JLabel("Weight:");
 		phoneLabel = new JLabel("Phone Number:");
-		//requiredLabel = new JLabel("* = required field");
 		errorMessage = new JLabel(""); //Set it to be blank at first.
 
 		
@@ -381,7 +379,6 @@ public class LoginGUI extends JPanel{
 		//Text fields
 		firstNameField = new JTextField(10);
 		lastNameField = new JTextField(10);
-		middleInitialField = new JTextField(10);
 		ageField = new JTextField(10);
 		heightField = new JTextField(10);
 		weightField = new JTextField(10);
@@ -416,7 +413,6 @@ public class LoginGUI extends JPanel{
 		userInformationPanel.add(middleInitialLabel, c);*/
 		c.gridx = 1;
 		c.gridy = 4;
-		userInformationPanel.add(middleInitialField, c);
 		c.gridx = 0;
 		c.gridy = 5;
 		userInformationPanel.add(ageLabel, c);
@@ -457,7 +453,6 @@ public class LoginGUI extends JPanel{
 				//Check if any of the required fields are left blank.
 				Boolean fieldsAreFilled = true; //We assume all the fields are filled until we've been proven wrong.
 				firstNameField.setBackground(Color.WHITE);
-				middleInitialField.setBackground(Color.WHITE);
 				lastNameField.setBackground(Color.WHITE);
 				ageField.setBackground(Color.WHITE);
 				heightField.setBackground(Color.WHITE);
@@ -522,9 +517,9 @@ public class LoginGUI extends JPanel{
 		});
 	}
 	public static void doctorUserInformationGUI(){
-		JLabel userInformationLabel, requiredLabel, firstNameLabel, lastNameLabel, middleInitialLabel, ageLabel, heightLabel, ethnicityLabel, specialtyLabel;
+		JLabel userInformationLabel, firstNameLabel, lastNameLabel, ageLabel, heightLabel, ethnicityLabel, specialtyLabel;
 		JPanel userInformationPanel;
-		final JTextField firstNameField, lastNameField, middleInitialField, ageField, heightField, weightField, specialtyField;
+		final JTextField firstNameField, lastNameField, ageField, heightField, weightField, specialtyField;
 		JButton submitButton;
 		
 		//Frame
@@ -538,12 +533,10 @@ public class LoginGUI extends JPanel{
 		userInformationLabel = new JLabel("Doctor Information");
 		firstNameLabel = new JLabel("First Name:");
 		lastNameLabel = new JLabel("Last Name:");
-		middleInitialLabel = new JLabel("Middle Initial:");
 		ageLabel = new JLabel("Age:");
 		heightLabel = new JLabel("Height:");
 		ethnicityLabel = new JLabel("Weight:");
 		specialtyLabel = new JLabel("Specialty:");
-		requiredLabel = new JLabel("* = required field");
 		errorMessage = new JLabel(""); //Set it to be blank at first.
 
 		
@@ -554,7 +547,6 @@ public class LoginGUI extends JPanel{
 		//Text fields
 		firstNameField = new JTextField(10);
 		lastNameField = new JTextField(10);
-		middleInitialField = new JTextField(10);
 		ageField = new JTextField(10);
 		heightField = new JTextField(10);
 		weightField = new JTextField(10);
@@ -586,9 +578,8 @@ public class LoginGUI extends JPanel{
 		/*c.gridx = 0;
 		c.gridy = 4;
 		userInformationPanel.add(middleInitialLabel, c);*/
-		c.gridx = 1;
-		c.gridy = 4;
-		userInformationPanel.add(middleInitialField, c);
+		/*c.gridx = 1;
+		c.gridy = 4;*/
 		c.gridx = 0;
 		c.gridy = 5;
 		userInformationPanel.add(ageLabel, c);

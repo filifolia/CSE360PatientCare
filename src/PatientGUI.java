@@ -24,7 +24,7 @@ public class PatientGUI extends LoginGUI {
     
     public PatientGUI()
     {
-             
+            logInFrame.dispose();
             patFrame = new JFrame("Patient Access");         //Main Frame
             
             model = new DefaultListModel();                    //Model serves just to test the GUI aesthetics

@@ -29,6 +29,7 @@ public class DoctorGUI extends LoginGUI{
         
    public DoctorGUI()
            {
+	           logInFrame.dispose();
                doctorFrame = new JFrame("Caregiver/Doctor Access");
                
                model = new DefaultListModel();                      //Since we don't have our patient list totally done, I used a DefaultListModel to put a pseudolist so I can test how it looks in the GUI
