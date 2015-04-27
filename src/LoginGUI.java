@@ -504,7 +504,7 @@ public class LoginGUI extends JPanel{
 				else{
 					//Actually make the new user account.
 					patient.setFirstName(firstNameField.getText());
-					patient.setLastName(firstNameField.getText());
+					patient.setLastName(lastNameField.getText());
 					patient.setAge(Integer.parseInt(ageField.getText()));
 					patient.setWeight(Integer.parseInt(weightField.getText()));
 					patient.setHeight(Integer.parseInt(heightField.getText()));
@@ -517,15 +517,27 @@ public class LoginGUI extends JPanel{
 		});
 	}
 	public static void doctorUserInformationGUI(){
-		JLabel userInformationLabel, firstNameLabel, lastNameLabel, ageLabel, heightLabel, ethnicityLabel, specialtyLabel;
+		JLabel userInformationLabel, firstNameLabel, lastNameLabel, ageLabel, heightLabel, weightLabel, specialtyLabel, phoneLabel;
 		JPanel userInformationPanel;
-		final JTextField firstNameField, lastNameField, ageField, heightField, weightField, specialtyField;
+		JPanel ImagePanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 10, 10));
+		final JTextField firstNameField, lastNameField, ageField, heightField, weightField, specialtyField, phoneField;
 		JButton submitButton;
 		
+		
+		//Image
+		try {
+			image = ImageIO.read(new File("src/effecent.png"));
+		} catch (IOException e1) {
+			System.out.println("image broken");			
+			e1.printStackTrace();
+		}
+		JLabel effecentPic = new JLabel(new ImageIcon(image));
+				
 		//Frame
+		
 		userInformationFrame = new JFrame("Efferent Patient Care System");
 		userInformationFrame.setVisible(true);
-		userInformationFrame.setSize(400, 450);
+		userInformationFrame.setSize(730, 450);
 		userInformationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		userInformationFrame.setLocationRelativeTo(null);
 
@@ -535,8 +547,9 @@ public class LoginGUI extends JPanel{
 		lastNameLabel = new JLabel("Last Name:");
 		ageLabel = new JLabel("Age:");
 		heightLabel = new JLabel("Height:");
-		ethnicityLabel = new JLabel("Weight:");
+		weightLabel = new JLabel("Weight:");
 		specialtyLabel = new JLabel("Specialty:");
+		phoneLabel = new JLabel("Phone:");
 		errorMessage = new JLabel(""); //Set it to be blank at first.
 
 		
@@ -551,6 +564,7 @@ public class LoginGUI extends JPanel{
 		heightField = new JTextField(10);
 		weightField = new JTextField(10);
 		specialtyField = new JTextField(10);
+		phoneField = new JTextField(10);
 		
 		//Panel
 		GridBagConstraints c = new GridBagConstraints(); //Used for arranging things on the panel.
@@ -575,11 +589,6 @@ public class LoginGUI extends JPanel{
 		c.gridx = 1;
 		c.gridy = 3;
 		userInformationPanel.add(lastNameField, c);
-		/*c.gridx = 0;
-		c.gridy = 4;
-		userInformationPanel.add(middleInitialLabel, c);*/
-		/*c.gridx = 1;
-		c.gridy = 4;*/
 		c.gridx = 0;
 		c.gridy = 5;
 		userInformationPanel.add(ageLabel, c);
@@ -594,7 +603,7 @@ public class LoginGUI extends JPanel{
 		userInformationPanel.add(heightField, c);
 		c.gridx = 0;
 		c.gridy = 7;
-		userInformationPanel.add(ethnicityLabel, c);
+		userInformationPanel.add(weightLabel, c);
 		c.gridx = 1;
 		c.gridy = 7;
 		userInformationPanel.add(weightField, c);
@@ -604,14 +613,19 @@ public class LoginGUI extends JPanel{
 		c.gridx = 1;
 		c.gridy = 8;
 		userInformationPanel.add(specialtyField, c);
-		/*c.gridx = 0;
+		c.gridx = 0;
 		c.gridy = 9;
-		userInformationPanel.add(requiredLabel, c);*/
+		userInformationPanel.add(phoneLabel, c);
 		c.gridx = 1;
 		c.gridy = 9;
+		userInformationPanel.add(phoneField, c);
+		c.gridx = 1;
+		c.gridy = 10;
 		userInformationPanel.add(submitButton, c);
 		
-		userInformationFrame.add(userInformationPanel); //Add the panel to the frame. 
+		ImagePanel.add(effecentPic);
+		ImagePanel.add(userInformationPanel);
+		userInformationFrame.add(ImagePanel); //Add the panel to the frame. 
 		
 		submitButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -620,6 +634,9 @@ public class LoginGUI extends JPanel{
 				firstNameField.setBackground(Color.WHITE);
 				lastNameField.setBackground(Color.WHITE);
 				ageField.setBackground(Color.WHITE);
+				weightField.setBackground(Color.WHITE);
+				heightField.setBackground(Color.WHITE);
+				phoneField.setBackground(Color.WHITE);
 				specialtyField.setBackground(Color.WHITE);
 				
 				if(firstNameField.getText().isEmpty()){
@@ -634,30 +651,50 @@ public class LoginGUI extends JPanel{
 					ageField.setBackground(Color.YELLOW);
 					fieldsAreFilled = false;				
 				}
+				if(heightField.getText().isEmpty()){
+					heightField.setBackground(Color.YELLOW);
+					fieldsAreFilled = false;				
+				}
+				if(weightField.getText().isEmpty()){
+					weightField.setBackground(Color.YELLOW);
+					fieldsAreFilled = false;				
+				}
 				if(specialtyField.getText().isEmpty()){
 					specialtyField.setBackground(Color.YELLOW);
 					fieldsAreFilled = false;
+				}
+				if(phoneField.getText().isEmpty()){
+					phoneField.setBackground(Color.YELLOW);
+					fieldsAreFilled = false;				
 				}
 				if(!fieldsAreFilled){ //Will be true if one of the required fields is empty.
 					errorMessage.setText("Highlighted fields are required.");
 					errorMessage.setForeground(Color.RED);
 				}
-				/*else if(!middleInitialField.getText().isEmpty() && middleInitialField.getText().length() != 1){
-					//Checking if middle initial is one letter.
-					errorMessage.setText("Middle initial must be one letter.");
-					errorMessage.setForeground(Color.RED);
-				}*/
 				else if(!isANumber(ageField.getText())){//Check if string is a number.
 					errorMessage.setText("Age must be a number.");
+					errorMessage.setForeground(Color.RED);
+				}
+				else if(!isANumber(weightField.getText())){//Check if string is a number.
+					errorMessage.setText("Weight must be a number.");
+					errorMessage.setForeground(Color.RED);
+				}
+				else if(!isANumber(heightField.getText())){//Check if string is a number.
+					errorMessage.setText("Height must be a number.");
+					errorMessage.setForeground(Color.RED);
+				}
+				else if(!isANumber(phoneField.getText())){//Check if string is a number.
+					errorMessage.setText("Phone must be a number.");
 					errorMessage.setForeground(Color.RED);
 				}
 				else{
 					//Actually make the new user account.
 					careGiver.setFirstName(firstNameField.getText());
-					careGiver.setLastName(firstNameField.getText());
+					careGiver.setLastName(lastNameField.getText());
 					careGiver.setAge(Integer.parseInt(ageField.getText()));
 					careGiver.setWeight(Integer.parseInt(weightField.getText()));
 					careGiver.setHeight(Integer.parseInt(heightField.getText()));
+					careGiver.setPhone(phoneField.getText());
 					careGiver.setDegree(specialtyField.getText());
 					//users.addElement(careGiver); //Adds the user to the hash table. Not sure if Caregivers are also added to hashtable or not.
 					new LoginGUI();
