@@ -18,12 +18,12 @@ public class LoginGUI extends JPanel{
 	private static JPasswordField passwordField, confirmPasswordField;
 	private static ButtonGroup patientDoctorButtonGroup;
 	private static JRadioButton patientRadio, doctorRadio;
-	private static UserList users = new UserList();
+	private static UserList PatientList = new UserList();
+	private static UserList DoctorList = new UserList();
 	private static BufferedImage image;
-	private static User newUser, currentUser; //Temporary user object that will be used for sign up
+	private static User currentUser; //Temporary user object that will be used for sign up
 	public static Patient patient = new Patient();
 	public static CareGiver careGiver = new CareGiver();		//These two will keep track of our patient/caregiver info.
-	public static ReportList reportList = new ReportList();
 	
 	public LoginGUI(){
 		logInFrame = new JFrame("Efferent Patient Care System");
@@ -122,7 +122,7 @@ public class LoginGUI extends JPanel{
 		//CREATE NEW ACCOUNT - action listener
 		createNewAccount.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
-					newUser = new User();
+					patient = new Patient();
 					signUpGUI();
 					logInFrame.setVisible(false); //Hide that first frame - the log-in one.
 				}
@@ -153,17 +153,17 @@ public class LoginGUI extends JPanel{
 					
 					//This is the kind of if statement that could be used here. 
 					if(patientRadio.isSelected()){ //User selected "Patient"
-						int checkIt = users.searchByUsername(userName.getText());
+						int checkIt = PatientList.searchByUsername(userName.getText());
 						if(checkIt == -1){ //Account doesn't exist
 							errorMessage.setText("Account does not exist."); //Display an error message via a label.
 							errorMessage.setForeground(Color.RED); //Nothing says "ERROR" like the color red.
 						}
-						else if(users.getUser(checkIt).getPassword() != password){ //Invalid password
+						else if(PatientList.getUser(checkIt).getPassword() != password){ //Invalid password
 							errorMessage.setText("Wrong password."); //Display an error message via a label.
 							errorMessage.setForeground(Color.RED); //Nothing says "ERROR" like the color red.
 						}
 						else { //Account exist
-							currentUser = users.getUser(checkIt); //Assigns the user object to currentUser
+							currentUser = PatientList.getUser(checkIt); //Assigns the user object to currentUser
 							new PatientGUI();
 							logInFrame.setVisible(false);
 						}
@@ -298,7 +298,7 @@ public class LoginGUI extends JPanel{
 					fieldsAreFilled = false;
 				}
 				
-				if(!userName.getText().isEmpty() && users.searchByUsername(userName.getText()) != -1){
+				if(!userName.getText().isEmpty() && PatientList.searchByUsername(userName.getText()) != -1){
 					userName.setBackground(Color.YELLOW);
 				}
 				
@@ -318,14 +318,14 @@ public class LoginGUI extends JPanel{
 
 				}
 				
-				else if(!userName.getText().isEmpty() && users.searchByUsername(userName.getText()) != -1){ //Checks hash table if the username exist
+				else if(!userName.getText().isEmpty() && PatientList.searchByUsername(userName.getText()) != -1){ //Checks hash table if the username exist
 					errorMessage.setText("Username already exist in the database.");
 					errorMessage.setForeground(Color.RED);
 				}
 				
 				else{ //Create the account.
-					newUser.setUsername(userName.getText()); //Set the user's username
-					newUser.setPassword(password); //Set the user's password
+					patient.setUsername(userName.getText()); //Set the user's username
+					patient.setPassword(password); //Set the user's password
 					if(patientRadio.isSelected()){
 						patientUserInformationGUI();
 						logInFrame1.setVisible(false);	
@@ -342,7 +342,7 @@ public class LoginGUI extends JPanel{
 	public static void patientUserInformationGUI(){
 		JLabel userInformationLabel, requiredLabel, firstNameLabel, lastNameLabel, middleInitialLabel, ageLabel, heightLabel, weightLabel, phoneLabel;
 		JPanel userInformationPanel;
-		JTextField firstNameField, lastNameField, middleInitialField, ageField, heightField, weightField, phoneField;
+		final JTextField firstNameField, lastNameField, middleInitialField, ageField, heightField, weightField, phoneField;
 		JButton submitButton;
 		
 		//Image
@@ -514,7 +514,7 @@ public class LoginGUI extends JPanel{
 					patient.setWeight(Integer.parseInt(weightField.getText()));
 					patient.setHeight(Integer.parseInt(heightField.getText()));
 					patient.setPhone(phoneField.getText());
-					users.addElement(patient); //Adds the user to the hash table
+					PatientList.addElement(patient); //Adds the user to the hash table
 					new LoginGUI();
 					userInformationFrame.setVisible(false);
 				}
@@ -524,7 +524,7 @@ public class LoginGUI extends JPanel{
 	public static void doctorUserInformationGUI(){
 		JLabel userInformationLabel, requiredLabel, firstNameLabel, lastNameLabel, middleInitialLabel, ageLabel, heightLabel, ethnicityLabel, specialtyLabel;
 		JPanel userInformationPanel;
-		JTextField firstNameField, lastNameField, middleInitialField, ageField, heightField, ethnicityField, specialtyField;
+		final JTextField firstNameField, lastNameField, middleInitialField, ageField, heightField, weightField, specialtyField;
 		JButton submitButton;
 		
 		//Frame
@@ -557,7 +557,7 @@ public class LoginGUI extends JPanel{
 		middleInitialField = new JTextField(10);
 		ageField = new JTextField(10);
 		heightField = new JTextField(10);
-		ethnicityField = new JTextField(10);
+		weightField = new JTextField(10);
 		specialtyField = new JTextField(10);
 		
 		//Panel
@@ -606,7 +606,7 @@ public class LoginGUI extends JPanel{
 		userInformationPanel.add(ethnicityLabel, c);
 		c.gridx = 1;
 		c.gridy = 7;
-		userInformationPanel.add(ethnicityField, c);
+		userInformationPanel.add(weightField, c);
 		c.gridx = 0;
 		c.gridy = 8;
 		userInformationPanel.add(specialtyLabel, c);
@@ -665,7 +665,7 @@ public class LoginGUI extends JPanel{
 					careGiver.setFirstName(firstNameField.getText());
 					careGiver.setLastName(firstNameField.getText());
 					careGiver.setAge(Integer.parseInt(ageField.getText()));
-					careGiver.setweight(Integer.parseInt(weightField.getText()));
+					careGiver.setWeight(Integer.parseInt(weightField.getText()));
 					careGiver.setHeight(Integer.parseInt(heightField.getText()));
 					careGiver.setDegree(specialtyField.getText());
 					//users.addElement(careGiver); //Adds the user to the hash table. Not sure if Caregivers are also added to hashtable or not.
