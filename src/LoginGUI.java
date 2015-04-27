@@ -363,14 +363,14 @@ public class LoginGUI extends JPanel{
 
 		//Labels
 		userInformationLabel = new JLabel("Patient Information");
-		firstNameLabel = new JLabel("*First Name:");
-		lastNameLabel = new JLabel("*Last Name:");
+		firstNameLabel = new JLabel("First Name:");
+		lastNameLabel = new JLabel("Last Name:");
 		middleInitialLabel = new JLabel("Middle Initial:");
-		ageLabel = new JLabel("*Age:");
-		heightLabel = new JLabel("*Height:");
-		weightLabel = new JLabel("*Weight:");
-		phoneLabel = new JLabel("*Phone Number:");
-		requiredLabel = new JLabel("* = required field");
+		ageLabel = new JLabel("Age:");
+		heightLabel = new JLabel("Height:");
+		weightLabel = new JLabel("Weight:");
+		phoneLabel = new JLabel("Phone Number:");
+		//requiredLabel = new JLabel("* = required field");
 		errorMessage = new JLabel(""); //Set it to be blank at first.
 
 		
@@ -411,9 +411,9 @@ public class LoginGUI extends JPanel{
 		c.gridx = 1;
 		c.gridy = 3;
 		userInformationPanel.add(lastNameField, c);
-		c.gridx = 0;
+		/*c.gridx = 0;
 		c.gridy = 4;
-		userInformationPanel.add(middleInitialLabel, c);
+		userInformationPanel.add(middleInitialLabel, c);*/
 		c.gridx = 1;
 		c.gridy = 4;
 		userInformationPanel.add(middleInitialField, c);
@@ -441,9 +441,9 @@ public class LoginGUI extends JPanel{
 		c.gridx = 1;
 		c.gridy = 8;
 		userInformationPanel.add(phoneField, c);
-		c.gridx = 0;
+		/*c.gridx = 0;
 		c.gridy = 9;
-		userInformationPanel.add(requiredLabel, c);
+		userInformationPanel.add(requiredLabel, c);*/
 		c.gridx = 1;
 		c.gridy = 9;
 		userInformationPanel.add(submitButton, c);
@@ -492,12 +492,12 @@ public class LoginGUI extends JPanel{
 					errorMessage.setText("Highlighted fields are required.");
 					errorMessage.setForeground(Color.RED);
 				}
-				else if(!middleInitialField.getText().isEmpty() && middleInitialField.getText().length() != 1){
+				/*else if(!middleInitialField.getText().isEmpty() && middleInitialField.getText().length() != 1){
 					//Checking if middle initial is one letter.
 					middleInitialField.setBackground(Color.YELLOW);
 					errorMessage.setText("Middle initial must be one letter.");
 					errorMessage.setForeground(Color.RED);
-				}
+				}*/
 				else if(!isANumber(phoneField.getText())){//Check if string is a number.
 					errorMessage.setText("Phone must be numbers.");
 					errorMessage.setForeground(Color.RED);
@@ -536,13 +536,13 @@ public class LoginGUI extends JPanel{
 
 		//Labels
 		userInformationLabel = new JLabel("Doctor Information");
-		firstNameLabel = new JLabel("*First Name:");
-		lastNameLabel = new JLabel("*Last Name:");
+		firstNameLabel = new JLabel("First Name:");
+		lastNameLabel = new JLabel("Last Name:");
 		middleInitialLabel = new JLabel("Middle Initial:");
-		ageLabel = new JLabel("*Age:");
+		ageLabel = new JLabel("Age:");
 		heightLabel = new JLabel("Height:");
-		ethnicityLabel = new JLabel("Ethnicity:");
-		specialtyLabel = new JLabel("*Specialty:");
+		ethnicityLabel = new JLabel("Weight:");
+		specialtyLabel = new JLabel("Specialty:");
 		requiredLabel = new JLabel("* = required field");
 		errorMessage = new JLabel(""); //Set it to be blank at first.
 
@@ -583,9 +583,9 @@ public class LoginGUI extends JPanel{
 		c.gridx = 1;
 		c.gridy = 3;
 		userInformationPanel.add(lastNameField, c);
-		c.gridx = 0;
+		/*c.gridx = 0;
 		c.gridy = 4;
-		userInformationPanel.add(middleInitialLabel, c);
+		userInformationPanel.add(middleInitialLabel, c);*/
 		c.gridx = 1;
 		c.gridy = 4;
 		userInformationPanel.add(middleInitialField, c);
@@ -613,9 +613,9 @@ public class LoginGUI extends JPanel{
 		c.gridx = 1;
 		c.gridy = 8;
 		userInformationPanel.add(specialtyField, c);
-		c.gridx = 0;
+		/*c.gridx = 0;
 		c.gridy = 9;
-		userInformationPanel.add(requiredLabel, c);
+		userInformationPanel.add(requiredLabel, c);*/
 		c.gridx = 1;
 		c.gridy = 9;
 		userInformationPanel.add(submitButton, c);
@@ -651,11 +651,11 @@ public class LoginGUI extends JPanel{
 					errorMessage.setText("Highlighted fields are required.");
 					errorMessage.setForeground(Color.RED);
 				}
-				else if(!middleInitialField.getText().isEmpty() && middleInitialField.getText().length() != 1){
+				/*else if(!middleInitialField.getText().isEmpty() && middleInitialField.getText().length() != 1){
 					//Checking if middle initial is one letter.
 					errorMessage.setText("Middle initial must be one letter.");
 					errorMessage.setForeground(Color.RED);
-				}
+				}*/
 				else if(!isANumber(ageField.getText())){//Check if string is a number.
 					errorMessage.setText("Age must be a number.");
 					errorMessage.setForeground(Color.RED);
