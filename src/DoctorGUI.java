@@ -1,5 +1,8 @@
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.*;
 /**
  *
  * @author Jeremy
@@ -11,16 +14,18 @@ import javax.swing.*;
 
 
 //The GUI so far looks okay; for now, this is the skeleton, when I get a better understanding of the other classes and when the Report classes are done, the functionality will be inputted.
-public class DoctorGUI {
+public class DoctorGUI extends LoginGUI{
         private JTabbedPane tab1,tab2, tab3;
         private JPanel panel1, panel2, panel3, tabPanel;
-        private JFrame doctorFrame;
-        private JButton setThresh,editInfo;
+        private static JFrame doctorFrame;
+        private JButton setThresh, editInfo;
         private JList list1;
-        private JLabel label1, label2, fullName, phoNum, status, patNum, degree;
+        private JLabel label1, label2, firstName, lastName, careAge, careHeight, careWeight,specialty;
         private JSlider upThresh, lowThresh;
         private DefaultListModel model;
         private final int lowVal = 0,highVal = 10, defaultVal = 5;  //These are the slider values.
+        private int lowerVal, higherVal;
+        static Patient pat = new Patient();
         
    public DoctorGUI()
            {
@@ -31,7 +36,7 @@ public class DoctorGUI {
                model.addElement("Hypothetical Patient 2 ");
                
                list1 = new JList(model);
-               JLabel asdf = new JLabel("asdf");
+               
              
                panel1 = new JPanel();                           //Panel 1, or the View Patient Panel. So far, the only thing here is the JList displaying all the patients.
                panel1.setLayout(new BorderLayout(1,1));
@@ -59,21 +64,25 @@ public class DoctorGUI {
                panel2.add(label2);
                panel2.add(upThresh);
                panel2.add(setThresh);
+               
+               lowerVal = lowThresh.getValue();
+               higherVal = upThresh.getValue();
             
-               fullName = new JLabel("Your full name is: ");                //Labels for the user panels.
-               phoNum = new JLabel("Your phone number is: ");
-               status = new JLabel("Your current height is: ");
-               patNum = new JLabel("Your current weight: ");
-               degree = new JLabel("Your current degree: ");
+               firstName = new JLabel("Your first name is: " + careGiver.getFirstName());                //Labels for the user panels.
+               lastName = new JLabel("Your last number is: " + careGiver.getLastName());
+               careAge = new JLabel("Your current age is: " + careGiver.getAge());
+               careHeight = new JLabel("Your current heightis : " + careGiver.getHeight());
+               careWeight = new JLabel("Your current weight is: " + careGiver.getWeight());
+               specialty = new JLabel("Your current specialty is: " + careGiver.getDegree());
                editInfo = new JButton("Edit User Info");
                
                panel3 = new JPanel();                           //Panel 3, our user info panel.
                panel3.setLayout(new GridLayout(10,1));           //For now, the labels serve to visualize the basic GUI,
-               panel3.add(fullName);                            //They will then use the getter methods in User Class to display the correct info for each user.
-               panel3.add(phoNum);
-               panel3.add(status);
-               panel3.add(patNum);
-               panel3.add(degree);
+               panel3.add(firstName);                            //They will then use the getter methods in User Class to display the correct info for each user.
+               panel3.add(lastName);
+               panel3.add(careAge);
+               panel3.add(careHeight);
+               panel3.add(specialty);
                panel3.add(editInfo);
                
                tab1 = new JTabbedPane();                    //Our three tabs
@@ -94,16 +103,26 @@ public class DoctorGUI {
                     public void actionPerformed(ActionEvent e)
                     {
                         editGUI();
-                        doctorFrame.setVisible(false);
+                        
                     }
                    
                });
                
-           }
-           
-public static void editGUI()    //Our new Edit panel
+               setThresh.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e)
+                    {
+                      pat.setFirstThresh(lowerVal);
+                      pat.setSecondThreshold(higherVal);
+                    }
+                   
+               });
+               
+               }
+   
+   
+  public static void editGUI()
   {
-      JFrame editFrame = new JFrame("Doctor/Cargiver Access");
+      final JFrame editFrame = new JFrame("Doctor/Cargiver Access");
       GridBagConstraints c = new GridBagConstraints();
       JPanel editPan = new JPanel(new GridBagLayout());
       
@@ -112,8 +131,6 @@ public static void editGUI()    //Our new Edit panel
       JTextField nHeight = new JTextField(10);
       JTextField nWeight = new JTextField(10);
       JTextField nDeg = new JTextField(10);
-      JButton submit = new JButton("Submit Changes");
-      JButton cancel = new JButton("Cancel");
       
       JLabel editName = new JLabel("Enter your edited name: ");
       JLabel editNum = new JLabel("Enter your new phone number: ");
@@ -121,8 +138,11 @@ public static void editGUI()    //Our new Edit panel
       JLabel editWeight = new JLabel("Enter your adjusted weight: ");
       JLabel editDeg = new JLabel("Enter your degree: ");
       
-      c.gridx = 0;
-      c.gridy = 1;
+      JButton submitR = new JButton("Submit Changes");
+      JButton cancel = new JButton("Cancel");
+      
+      c.gridx = 1;
+      c.gridy = 0;
       c.insets = new Insets(10, 10, 10, 10);
       editPan.add(editName,c);
       c.gridx = 1;
@@ -154,15 +174,24 @@ public static void editGUI()    //Our new Edit panel
       editPan.add(nDeg,c);
       c.gridx = 0;
       c.gridy = 6;
-      editPan.add(submit,c);
+      editPan.add(cancel,c);
       c.gridx = 1;
       c.gridy = 6;
-      editPan.add(cancel,c);
+      editPan.add(submitR,c);
       
       editFrame.add(editPan);
       editFrame.setVisible(true);
       editFrame.setSize(600,600);
       editFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      
+      cancel.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e)
+                    {
+                      editFrame.dispose();
+                      doctorFrame.setVisible(true);
+                    }
+                   
+               });
       
       
   }

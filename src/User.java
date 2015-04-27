@@ -48,7 +48,7 @@ public class User implements Serializable
 	{
 		age = num;
 	}
-	public void setweight(float num)
+	public void setWeight(float num)
 	{
 		weight = num;
 	}

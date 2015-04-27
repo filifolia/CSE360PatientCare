@@ -1,27 +1,30 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.util.Scanner;
 
 /**
  *
  * @author Jeremy
  */
-
-//This is the GUI the patient will see upon a successful login.
-
-public class PatientGUI {
-    private JLabel pain, drowsiness, nausea, anxiety, depression;
-    private JLabel patName, patAge, patStatus, phoNum, medList;
+public class PatientGUI extends LoginGUI {
+    private JLabel pain, drowsiness, nausea, anxiety, depression,output;
+    private JLabel patName, patAge, patHeight, phoNum, patWeight;
     private JPanel panel1, panel2, panel3, tabPanel;
     private JTabbedPane tab1;
-    private JSlider pSlider, dSlider, nSlider, aSlider, depSlider;
-    private JFrame patFrame;
+    final private JSlider pSlider, dSlider, nSlider, aSlider, depSlider;
+    private static JFrame patFrame;
     private JList list1;
     private JButton submit,edit;
     private DefaultListModel model;
-    private final int lowVal = 0,highVal = 10, defaultVal = 5; 
+    private final int lowVal = 0,highVal = 10, defaultVal = 5;
+    
+ 
     
     public PatientGUI()
     {
+             
             patFrame = new JFrame("Patient Access");         //Main Frame
             
             model = new DefaultListModel();                    //Model serves just to test the GUI aesthetics
@@ -81,21 +84,28 @@ public class PatientGUI {
             panel1.add(depSlider);
             panel1.add(submit);
             
+            
+            
+            output = new JLabel();
             panel2 = new JPanel();                          //Our user info panel
             panel2.setLayout(new GridLayout(10,1));
-            patName = new JLabel("Your full name is: ");
-            patAge = new JLabel("Your current age is: ");
-            phoNum = new JLabel("Your phone number is: ");
-            patStatus = new JLabel("Your current height is: ");
-            medList = new JLabel("Your current weight is: ");
+            patName = new JLabel("Your first name is: " + patient.getFirstName());  //Patient comes from the main file
+            JLabel patlName = new JLabel("Your last name is: " + patient.getLastName());
+            patAge = new JLabel("Your current age is: " + patient.getAge());
+            phoNum = new JLabel("Your phone number is: " + patient.getPhoneNumber());
+            patHeight = new JLabel("Your current height is: " + patient.getHeight());
+            patWeight = new JLabel("Your current weight is: " + patient.getWeight());
             edit = new JButton("Edit User Info");
             
+            
             panel2.add(patName);
+            panel2.add(patlName);
             panel2.add(patAge);
+            panel2.add(patHeight);
+            panel2.add(patWeight);
             panel2.add(phoNum);
-            panel2.add(patStatus);
-            panel2.add(medList);
             panel2.add(edit);
+           
             
             panel3 = new JPanel();                              //Our view report panel
             panel3.setLayout(new GridLayout(1,1));
@@ -109,13 +119,13 @@ public class PatientGUI {
             tabPanel = new JPanel();
             tabPanel.setLayout(new GridLayout(1,1));
             tabPanel.add(tab1);
-    
+           
            patFrame.add(tabPanel);
            patFrame.setVisible(true);
            patFrame.setSize(600,600);
            patFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
            
-            edit.addActionListener(new ActionListener(){
+           edit.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e)
                     {
                         editPatGUI();
@@ -123,15 +133,24 @@ public class PatientGUI {
                     }
                    
                });
+           
+           submit.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e)    //Honestly not really sure how I'm gonna make this work, 
+                    {                                             //But after putting the report in a DefaultModelList, it did show up(albeit it didn't show the contents), so there's progress.
+                        Report report = new Report(pSlider.getValue(),dSlider.getValue(),nSlider.getValue(),aSlider.getValue(),depSlider.getValue());
+                        
+                    }
+                   
+               });
     }
     
-    public static void editPatGUI()  //Edit Panel
+    public static void editPatGUI()
   {
-      JFrame editFrame = new JFrame("Patient Access");
+      final JFrame editFrame = new JFrame("Patient Access");
       GridBagConstraints c = new GridBagConstraints();
-      JPanel editPan = new JPanel(new GridBagLayout());
+      final JPanel editPan = new JPanel(new GridBagLayout());
       
-      JTextField name = new JTextField(10);
+      final JTextField name = new JTextField(10);
       JTextField number = new JTextField(10);
       JTextField nHeight = new JTextField(10);
       JTextField nWeight = new JTextField(10);
@@ -139,11 +158,14 @@ public class PatientGUI {
       JButton submitR = new JButton("Submit Changes");
       JButton cancel = new JButton("Cancel");
       
+      
       JLabel editName = new JLabel("Enter your edited name: ");
       JLabel editNum = new JLabel("Enter your new phone number: ");
       JLabel editHeight = new JLabel("Enter your adjusted height: ");
       JLabel editWeight = new JLabel("Enter your adjusted weight: ");
       JLabel editAge = new JLabel("Enter your age: ");
+      
+      
       
       c.gridx = 0;
       c.gridy = 1;
@@ -178,19 +200,51 @@ public class PatientGUI {
       editPan.add(nAge,c);
       c.gridx = 0;
       c.gridy = 6;
-      editPan.add(submitR,c);
+      editPan.add(cancel,c);
       c.gridx = 1;
       c.gridy = 6;
-      editPan.add(cancel,c);
+      editPan.add(submitR,c);
+      
       
       editFrame.add(editPan);
       editFrame.setVisible(true);
       editFrame.setSize(600,600);
       editFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      
+      //submitR.addActionListener(new editLabel());                         Tried doing the submit change button here, but it ended up being much too complicated to implement nicely.
+     /* submitR.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        firstName = name.getText();
+                        user1.setFirstName(firstName);
+                        //editFrame.setVisible(false);
+                        JFrame test = new JFrame(firstName);
+                        test.setVisible(true);
+                        test.setSize(400,400);
+                        test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        patFrame.setVisible(true);
+                        
+                    }
+                   
+               });*/
+      
+      
+      
+      cancel.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e)
+                    {
+                      editFrame.dispose();
+                      patFrame.setVisible(true);
+                    }
+                   
+               });
   }
-   
+    
+    
+    
     public static void main(String[] args) {
         new PatientGUI();
     }
     
 }
+
