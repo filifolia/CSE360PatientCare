@@ -158,7 +158,7 @@ public class LoginGUI extends JPanel{
 							errorMessage.setText("Account does not exist."); //Display an error message via a label.
 							errorMessage.setForeground(Color.RED); //Nothing says "ERROR" like the color red.
 						}
-						else if(PatientList.getUser(checkIt).getPassword() != password){ //Invalid password
+						else if(PatientList.getUser(checkIt).getPassword().equals(password) == false){ //Invalid password
 							errorMessage.setText("Wrong password."); //Display an error message via a label.
 							errorMessage.setForeground(Color.RED); //Nothing says "ERROR" like the color red.
 						}
