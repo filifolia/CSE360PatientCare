@@ -9,15 +9,15 @@ import java.util.Scanner;
  * @author Jeremy
  */
 public class PatientGUI extends LoginGUI {
-    private JLabel pain, drowsiness, nausea, anxiety, depression,output,confirm,avg;
+    private JLabel pain, drowsiness, nausea, anxiety, depression,output,confirm,avg,replist;
     private JLabel patName, patAge, patHeight, phoNum, patWeight;
     private JPanel panel1, panel2, panel3, tabPanel,panel4;
     private JTabbedPane tab1;
     final public JSlider pSlider, dSlider, nSlider, aSlider, depSlider;
     public static JFrame patFrame;
-    private JList list1;
-    private JButton submit,edit,logout;
-    private DefaultListModel model;
+    public JList list1;
+    private JButton submit,edit,logout,viewR;
+    public DefaultListModel model;
     private int repNum = 0;
     private float avgVal = 0;
     private final int lowVal = 0,highVal = 10, defaultVal = 5;
@@ -33,8 +33,9 @@ public class PatientGUI extends LoginGUI {
             model = new DefaultListModel();                    //Model serves just to test the GUI aesthetics
             list1 = new JList(model);
             
+            
             panel1 = new JPanel();
-            panel1.setLayout(new GridLayout(13,1));               //Our write report panel
+            panel1.setLayout(new GridLayout(14,1));               //Our write report panel
             
             pSlider = new JSlider(JSlider.HORIZONTAL,lowVal,highVal,defaultVal);   //All five of the sliders
             pSlider.setMajorTickSpacing(10);
@@ -74,6 +75,7 @@ public class PatientGUI extends LoginGUI {
             submit = new JButton("Submit Report");
             confirm = new JLabel("");
             avg = new JLabel("");
+            replist = new JLabel("");
             
             panel1.add(pain);
             panel1.add(pSlider);
@@ -88,7 +90,7 @@ public class PatientGUI extends LoginGUI {
             panel1.add(submit);
             panel1.add(confirm);
             panel1.add(avg);
-            
+            panel1.add(replist);
             
             
             output = new JLabel();
@@ -113,8 +115,10 @@ public class PatientGUI extends LoginGUI {
            
             
             panel3 = new JPanel();                              //Our view report panel
-            panel3.setLayout(new GridLayout(1,1));
+            panel3.setLayout(new GridLayout(5,1));
             panel3.add(list1);
+            viewR = new JButton("View Selected Report");
+            panel3.add(viewR);
             
             panel4 = new JPanel();
             panel4.setLayout(new GridLayout(5,1));
@@ -157,7 +161,7 @@ public class PatientGUI extends LoginGUI {
            submit.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e)    //Honestly not really sure how I'm gonna make this work, 
                     {                                             //But after putting the report in a DefaultModelList, it did show up(albeit it didn't show the contents), so there's progress.
-                         pSliderV = pSlider.getValue();
+                        pSliderV = pSlider.getValue();
                         dSliderV = dSlider.getValue();
                         nSliderV = nSlider.getValue();
                         aSliderV = aSlider.getValue();
@@ -178,8 +182,16 @@ public class PatientGUI extends LoginGUI {
                         avgVal = report.getAverage();
                         avg.setText("The average threshold for this report was: " + avgVal);
                         replist.setText(patient.reports[repNum].toString());
-                        repNum++;
                         model.addElement(patient.reports);
+                        repNum++;
+                        
+                    }
+                   
+               });
+           
+           viewR.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e)
+                    {
                         
                     }
                    
@@ -289,4 +301,3 @@ public class PatientGUI extends LoginGUI {
     }
     
 }
-
