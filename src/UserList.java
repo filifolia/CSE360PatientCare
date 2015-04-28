@@ -7,7 +7,7 @@ import java.io.*;
 
 public class UserList implements Serializable
 {
-	User[] List;
+	private User[] List;
 	final private int size = 100;
 	
 	public UserList()
