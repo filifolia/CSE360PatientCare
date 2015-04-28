@@ -159,7 +159,7 @@ public class PatientGUI extends LoginGUI {
            submit.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e)    //Honestly not really sure how I'm gonna make this work, 
                     {                                             //But after putting the report in a DefaultModelList, it did show up(albeit it didn't show the contents), so there's progress.
-                        pSliderV = pSlider.getValue();
+                         pSliderV = pSlider.getValue();
                         dSliderV = dSlider.getValue();
                         nSliderV = nSlider.getValue();
                         aSliderV = aSlider.getValue();
@@ -168,11 +168,19 @@ public class PatientGUI extends LoginGUI {
                         Report report = new Report(pSliderV,dSliderV,nSliderV,aSliderV,depSliderV);
                         patient.addReport(report);
                         report.calcAve(pSliderV,dSliderV,nSliderV,aSliderV,depSliderV);
-                        repNum++;
+                        
+                        patient.reports[repNum].setPain(pSliderV);
+                        patient.reports[repNum].setSleepy(dSliderV);
+                        patient.reports[repNum].setNausea(nSliderV);
+                        patient.reports[repNum].setAnxiety(aSliderV);
+                        patient.reports[repNum].setDepression(depSliderV);
+                        
                         confirm.setText("Report number " + repNum + " successfully submitted!");
                         confirm.setForeground(Color.green);
                         avgVal = report.getAverage();
                         avg.setText("The average threshold for this report was: " + avgVal);
+                        replist.setText(patient.reports[repNum].toString());
+                        repNum++;
                         
                         
                     }
