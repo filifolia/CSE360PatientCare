@@ -1,4 +1,6 @@
-public class CareGiver extends User 
+import java.io.Serializable;
+
+public class CareGiver extends User implements Serializable
 {
 	private int numOfPatients;
 	private String degree;
