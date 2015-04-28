@@ -9,8 +9,7 @@ import java.util.Scanner;
  * @author Jeremy
  */
 public class PatientGUI extends LoginGUI {
-	private static final long serialVersionUID = 1L;
-	private JLabel pain, drowsiness, nausea, anxiety, depression,output,confirm,avg;
+    private JLabel pain, drowsiness, nausea, anxiety, depression,output,confirm,avg,replist;
     private JLabel patName, patAge, patHeight, phoNum, patWeight;
     private JPanel panel1, panel2, panel3, tabPanel,panel4;
     private JTabbedPane tab1;
@@ -20,7 +19,7 @@ public class PatientGUI extends LoginGUI {
     private JButton submit,edit,logout,viewR;
     public DefaultListModel model;
     private int repNum = 0;
-    private float avgVal = 0;
+    //public float avgVal = 0;
     private final int lowVal = 0,highVal = 10, defaultVal = 5;
     public float pSliderV, dSliderV, nSliderV, aSliderV, depSliderV;
     
@@ -183,22 +182,16 @@ public class PatientGUI extends LoginGUI {
                         avgVal = report.getAverage();
                         avg.setText("The average threshold for this report was: " + avgVal);
                         model.addElement(patient.reports);
-                        repNum++;
                         
-                        //This saves the report to the user's account
-                        int checkIt = PatientList.searchByUsername(patient.getUsername()); //checkIt is the index of the patient in the database
-                        PatientList.setUser(checkIt, patient);
-                        ListIO.savePatientFile(PatientList);
-                        System.out.println("Reports saved to database in index " + checkIt);
                         
                     }
                    
                });
            
-           viewR.addActionListener(new ActionListener(){
+           viewR.addActionListener(new ActionListener(){                           //This will be the pop up window that displays the selected report from the list.
                     public void actionPerformed(ActionEvent e)
                     {
-                       final JFrame repFrame = new JFrame("Reports");
+                        final JFrame repFrame = new JFrame("Reports");
                         JPanel repPanel = new JPanel();
                         repPanel.setLayout(new GridLayout(9,1));
                         JLabel patName = new JLabel("Patient: " + patient.getFirstName() + " " + patient.getLastName());
@@ -230,10 +223,14 @@ public class PatientGUI extends LoginGUI {
                         repFrame.setVisible(false);
                      }
                    
-               });  
+               });
+                    
                     }
                    
                });
+           
+           
+           
     }
     
     public static void editPatGUI()
@@ -339,3 +336,4 @@ public class PatientGUI extends LoginGUI {
     }
     
 }
+
