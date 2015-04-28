@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 public class PatientGUI extends LoginGUI {
 	private static final long serialVersionUID = 1L;
-	private JLabel pain, drowsiness, nausea, anxiety, depression,output,confirm,avg,replist;
+	private JLabel pain, drowsiness, nausea, anxiety, depression,output,confirm,avg;
     private JLabel patName, patAge, patHeight, phoNum, patWeight;
     private JPanel panel1, panel2, panel3, tabPanel,panel4;
     private JTabbedPane tab1;
@@ -76,7 +76,7 @@ public class PatientGUI extends LoginGUI {
             submit = new JButton("Submit Report");
             confirm = new JLabel("");
             avg = new JLabel("");
-            replist = new JLabel("");
+            
             
             panel1.add(pain);
             panel1.add(pSlider);
@@ -91,7 +91,7 @@ public class PatientGUI extends LoginGUI {
             panel1.add(submit);
             panel1.add(confirm);
             panel1.add(avg);
-            panel1.add(replist);
+            
             
             
             output = new JLabel();
@@ -182,7 +182,6 @@ public class PatientGUI extends LoginGUI {
                         confirm.setForeground(Color.green);
                         avgVal = report.getAverage();
                         avg.setText("The average threshold for this report was: " + avgVal);
-                        replist.setText(patient.reports[repNum].toString());
                         model.addElement(patient.reports);
                         repNum++;
                         
