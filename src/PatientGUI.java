@@ -199,7 +199,35 @@ public class PatientGUI extends LoginGUI {
            viewR.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e)
                     {
-                        
+                       final JFrame repFrame = new JFrame("Reports");
+                        JPanel repPanel = new JPanel();
+                        repPanel.setLayout(new GridLayout(7,1));
+                        JLabel repPain = new JLabel("Pain Threshold: "+patient.reports[repNum].getPain());
+                        JLabel repSleepy = new JLabel("Drowsiness Threshold: " + patient.reports[repNum].getSleepy());
+                        JLabel repNausea = new JLabel("Nausea Threshold: " + patient.reports[repNum].getNausea());
+                        JLabel repAnx = new JLabel("Anxiety Threshold: " + patient.reports[repNum].getAnxiety());
+                        JLabel repDep = new JLabel("Depression Threshold: " + patient.reports[repNum].getDepression());
+                        JLabel thresAvg = new JLabel("Average Threshold was: " + avgVal);
+                        JButton closeIt = new JButton("Close");
+                        repPanel.add(repPain);
+                        repPanel.add(repSleepy);
+                        repPanel.add(repNausea);
+                        repPanel.add(repAnx);
+                        repPanel.add(repDep);
+                        repPanel.add(thresAvg);
+                        repPanel.add(closeIt);
+                        repFrame.add(repPanel);
+                        repFrame.setVisible(true);
+                        repFrame.setSize(400,400);
+                        repFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        repNum++;                                                                   //THIS VARIABLE IS THE ISSUE, IT KEEPS TRACK OF WHERE IN THE ARRAY WE ARE, I HAVE TO INCREMENT IT SOMEWHERE
+                    closeIt.addActionListener(new ActionListener(){                                 //SO IT DOESNT KEEP OVERWRITING THE VALUE AT 0, BUT I DON'T KNOW WHERE I CAN INCREMENT IT WITHOUT FUCKING IT UP
+                    public void actionPerformed(ActionEvent e)                                      //RIGHT NOW, I CAN ONLY VIEW THE LAST SUBMITTED REPORT ONCE BECAUSE IT INCREMENTS HERE, BUT IF IT DOESNT INCREMENT
+                    {                                                                               //IT KEEPS OVERWRITING.
+                        repFrame.setVisible(false);
+                     }
+                   
+               });  
                     }
                    
                });
