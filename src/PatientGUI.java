@@ -31,8 +31,6 @@ public class PatientGUI extends LoginGUI {
             patFrame = new JFrame("Patient Access");         //Main Frame
             
             model = new DefaultListModel();                    //Model serves just to test the GUI aesthetics
-            model.addElement("Hypothetical Report 1");
-            model.addElement("Hypothetical Report 2");
             list1 = new JList(model);
             
             panel1 = new JPanel();
@@ -181,7 +179,7 @@ public class PatientGUI extends LoginGUI {
                         avg.setText("The average threshold for this report was: " + avgVal);
                         replist.setText(patient.reports[repNum].toString());
                         repNum++;
-                        
+                        model.addElement(patient.reports);
                         
                     }
                    
