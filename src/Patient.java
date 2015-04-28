@@ -4,7 +4,7 @@ public class Patient extends User implements Serializable
 {
 	private String[] conditions;
 	private String[] medications;
-	private Report[] reports;
+	public Report[] reports;
 	private int numOfCond;
 	private int numOfReports;
 	private int numOfMeds;
