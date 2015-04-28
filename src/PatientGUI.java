@@ -9,7 +9,8 @@ import java.util.Scanner;
  * @author Jeremy
  */
 public class PatientGUI extends LoginGUI {
-    private JLabel pain, drowsiness, nausea, anxiety, depression,output,confirm,avg,replist;
+	private static final long serialVersionUID = 1L;
+	private JLabel pain, drowsiness, nausea, anxiety, depression,output,confirm,avg,replist;
     private JLabel patName, patAge, patHeight, phoNum, patWeight;
     private JPanel panel1, panel2, panel3, tabPanel,panel4;
     private JTabbedPane tab1;
@@ -184,6 +185,12 @@ public class PatientGUI extends LoginGUI {
                         replist.setText(patient.reports[repNum].toString());
                         model.addElement(patient.reports);
                         repNum++;
+                        
+                        //This saves the report to the user's account
+                        int checkIt = PatientList.searchByUsername(patient.getUsername()); //checkIt is the index of the patient in the database
+                        PatientList.setUser(checkIt, patient);
+                        ListIO.savePatientFile(PatientList);
+                        System.out.println("Reports saved to database in index " + checkIt);
                         
                     }
                    

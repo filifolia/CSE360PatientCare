@@ -27,6 +27,7 @@ public class LoginGUI extends JPanel{
 	public static CareGiver careGiver = new CareGiver();		//These two will keep track of our patient/caregiver info.
 	
 	public LoginGUI(){
+		System.out.println("LoginGUI initiated.");
 		PatientList = ListIO.loadPatientFile(); // Loads database
 		DoctorList = ListIO.loadCareGiverFile(); //Loads Database
 		logInFrame = new JFrame("Efferent Patient Care System");
