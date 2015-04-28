@@ -131,18 +131,23 @@ public class DoctorGUI extends LoginGUI{
                view.addActionListener(new ActionListener(){                           //This will be the pop up window that displays the selected report from the list.
                     public void actionPerformed(ActionEvent e)
                     {
+                         int i = 0;
+                        avgVal = (patient.reports[i].getPain() + patient.reports[i].getSleepy() + patient.reports[i].getNausea() + patient.reports[i].getAnxiety() + patient.reports[i].getDepression())/5;
                         final JFrame repFrame = new JFrame("Reports");
                         JPanel repPanel = new JPanel();
-                        repPanel.setLayout(new GridLayout(8,1));
+                        repPanel.setLayout(new GridLayout(9,1));
                         JLabel patName = new JLabel("Patient: " + patient.getFirstName() + " " + patient.getLastName());
-                        JLabel repPain = new JLabel("Pain Threshold: "+patient.reports[repNum].getPain());
-                        JLabel repSleepy = new JLabel("Drowsiness Threshold: " + patient.reports[repNum].getSleepy());
-                        JLabel repNausea = new JLabel("Nausea Threshold: " + patient.reports[repNum].getNausea());
-                        JLabel repAnx = new JLabel("Anxiety Threshold: " + patient.reports[repNum].getAnxiety());
-                        JLabel repDep = new JLabel("Depression Threshold: " + patient.reports[repNum].getDepression());
+                        JLabel patNum = new JLabel("Patient Phone: " + patient.getPhoneNumber());
+                        JLabel repPain = new JLabel("Pain Threshold: "+ patient.reports[i].getPain());
+                        JLabel repSleepy = new JLabel("Drowsiness Threshold: " + patient.reports[i].getSleepy());
+                        JLabel repNausea = new JLabel("Nausea Threshold: " + patient.reports[i].getNausea());
+                        JLabel repAnx = new JLabel("Anxiety Threshold: " + patient.reports[i].getAnxiety());
+                        JLabel repDep = new JLabel("Depression Threshold: " + patient.reports[i].getDepression());
                         JLabel thresAvg = new JLabel("Average Threshold was: " + avgVal);
-                        JButton closeIt = new JButton("Close");
+                        if(avgVal<patient.getFirstThresh()){thresAvg.setForeground(Color.green);} else if(avgVal>=patient.getFirstThresh() && avgVal < patient.getSecondThreshold()){thresAvg.setForeground(Color.yellow);} else if(avgVal >= patient.getSecondThreshold()){thresAvg.setForeground(Color.red);}
+                        JButton closeIt = new JButton("Close"); 
                         repPanel.add(patName);
+                        repPanel.add(patNum);
                         repPanel.add(repPain);
                         repPanel.add(repSleepy);
                         repPanel.add(repNausea);
@@ -154,7 +159,7 @@ public class DoctorGUI extends LoginGUI{
                         repFrame.setVisible(true);
                         repFrame.setSize(400,400);
                         repFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        //repNum++;                                                                   //THIS VARIABLE IS THE ISSUE, IT KEEPS TRACK OF WHERE IN THE ARRAY WE ARE, I HAVE TO INCREMENT IT SOMEWHERE
+                        i++;                                                                                         //THIS VARIABLE IS THE ISSUE, IT KEEPS TRACK OF WHERE IN THE ARRAY WE ARE, I HAVE TO INCREMENT IT SOMEWHERE
                     closeIt.addActionListener(new ActionListener(){                                 //SO IT DOESNT KEEP OVERWRITING THE VALUE AT 0, BUT I DON'T KNOW WHERE I CAN INCREMENT IT WITHOUT FUCKING IT UP
                     public void actionPerformed(ActionEvent e)                                      //RIGHT NOW, I CAN ONLY VIEW THE LAST SUBMITTED REPORT ONCE BECAUSE IT INCREMENTS HERE, BUT IF IT DOESNT INCREMENT
                     {                                                                               //IT KEEPS OVERWRITING.
