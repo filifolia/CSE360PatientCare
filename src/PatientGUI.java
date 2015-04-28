@@ -200,7 +200,9 @@ public class PatientGUI extends LoginGUI {
                     {
                        final JFrame repFrame = new JFrame("Reports");
                         JPanel repPanel = new JPanel();
-                        repPanel.setLayout(new GridLayout(7,1));
+                        repPanel.setLayout(new GridLayout(9,1));
+                        JLabel patName = new JLabel("Patient: " + patient.getFirstName() + " " + patient.getLastName());
+                        JLabel patNum = new JLabel("Patient Phone: " + patient.getPhoneNumber());
                         JLabel repPain = new JLabel("Pain Threshold: "+patient.reports[repNum].getPain());
                         JLabel repSleepy = new JLabel("Drowsiness Threshold: " + patient.reports[repNum].getSleepy());
                         JLabel repNausea = new JLabel("Nausea Threshold: " + patient.reports[repNum].getNausea());
@@ -208,6 +210,8 @@ public class PatientGUI extends LoginGUI {
                         JLabel repDep = new JLabel("Depression Threshold: " + patient.reports[repNum].getDepression());
                         JLabel thresAvg = new JLabel("Average Threshold was: " + avgVal);
                         JButton closeIt = new JButton("Close");
+                        repPanel.add(patName);
+                        repPanel.add(patNum);
                         repPanel.add(repPain);
                         repPanel.add(repSleepy);
                         repPanel.add(repNausea);
