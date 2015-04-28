@@ -131,7 +131,7 @@ public class DoctorGUI extends LoginGUI{
                view.addActionListener(new ActionListener(){                           //This will be the pop up window that displays the selected report from the list.
                     public void actionPerformed(ActionEvent e)
                     {
-                         int i = 0;
+                        int i = 0;
                         avgVal = (patient.reports[i].getPain() + patient.reports[i].getSleepy() + patient.reports[i].getNausea() + patient.reports[i].getAnxiety() + patient.reports[i].getDepression())/5;
                         final JFrame repFrame = new JFrame("Reports");
                         JPanel repPanel = new JPanel();
@@ -159,7 +159,7 @@ public class DoctorGUI extends LoginGUI{
                         repFrame.setVisible(true);
                         repFrame.setSize(400,400);
                         repFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        i++;                                                                                         //THIS VARIABLE IS THE ISSUE, IT KEEPS TRACK OF WHERE IN THE ARRAY WE ARE, I HAVE TO INCREMENT IT SOMEWHERE
+                        i++;                                                                   //THIS VARIABLE IS THE ISSUE, IT KEEPS TRACK OF WHERE IN THE ARRAY WE ARE, I HAVE TO INCREMENT IT SOMEWHERE
                     closeIt.addActionListener(new ActionListener(){                                 //SO IT DOESNT KEEP OVERWRITING THE VALUE AT 0, BUT I DON'T KNOW WHERE I CAN INCREMENT IT WITHOUT FUCKING IT UP
                     public void actionPerformed(ActionEvent e)                                      //RIGHT NOW, I CAN ONLY VIEW THE LAST SUBMITTED REPORT ONCE BECAUSE IT INCREMENTS HERE, BUT IF IT DOESNT INCREMENT
                     {                                                                               //IT KEEPS OVERWRITING.
