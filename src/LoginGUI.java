@@ -11,7 +11,6 @@ import javax.swing.*;
 
 public class LoginGUI extends JPanel{
 	private static JFrame logInFrame1, userInformationFrame;
-	public static JFrame logInFrame;
 	private static JLabel topLabel, userNameLabel, passwordLabel, confirmPasswordLabel, typeLabel, errorMessage;
 	private static JPanel logInPanel, ImagePanel;
 	private static JButton createNewAccount, signIn;
@@ -19,14 +18,18 @@ public class LoginGUI extends JPanel{
 	private static JPasswordField passwordField, confirmPasswordField;
 	private static ButtonGroup patientDoctorButtonGroup;
 	private static JRadioButton patientRadio, doctorRadio;
-	private static UserList PatientList = new UserList();
-	private static UserList DoctorList = new UserList();
 	private static BufferedImage image;
-	private static User currentUser; //Temporary user object that will be used for sign up
+	public static JFrame logInFrame;
+	public static UserList PatientList = new UserList();
+	public static UserList DoctorList = new UserList();	
 	public static Patient patient = new Patient();
 	public static CareGiver careGiver = new CareGiver();		//These two will keep track of our patient/caregiver info.
 	
 	public LoginGUI(){
+		PatientList = PatientList.loadPatientFile();
+		if(PatientList == null){
+			PatientList = new UserList();
+		}
 		logInFrame = new JFrame("Efferent Patient Care System");
 		ImagePanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 10, 10));
 		logInPanel = new JPanel(new GridBagLayout());
@@ -164,7 +167,7 @@ public class LoginGUI extends JPanel{
 							errorMessage.setForeground(Color.RED); //Nothing says "ERROR" like the color red.
 						}
 						else { //Account exist
-							currentUser = PatientList.getUser(checkIt); //Assigns the user object to currentUser
+							patient = (Patient) PatientList.getUser(checkIt); //Assigns the user object to currentUser
 							logInFrame.dispose(); //Closes that first frame - the log-in one.
 							new PatientGUI();						
 						}
@@ -510,6 +513,7 @@ public class LoginGUI extends JPanel{
 					patient.setHeight(Integer.parseInt(heightField.getText()));
 					patient.setPhone(phoneField.getText());
 					PatientList.addElement(patient); //Adds the user to the hash table
+					PatientList.savePatientFile(PatientList);
 					new LoginGUI();
 					userInformationFrame.setVisible(false);
 				}
