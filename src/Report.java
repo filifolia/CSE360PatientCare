@@ -1,4 +1,6 @@
-public class Report {
+import java.io.Serializable;
+
+public class Report implements Serializable{
 	private float pain;
 	private float sleepy;
 	private float nausea;

@@ -1,5 +1,7 @@
+import java.io.Serializable;
 
-public class Reference 
+
+public class Reference implements Serializable
 {
 	private int key;
 	private String username;
