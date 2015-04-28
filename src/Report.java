@@ -1,6 +1,3 @@
-// The report class that patients create and caregivers can inspect.
-// Saves the integer representation of symptoms, the patient and caregiver who can 
-// view it, the date, and the report number.
 public class Report {
 	private float pain;
 	private float sleepy;
@@ -13,10 +10,10 @@ public class Report {
 	private Reference patient;
 	//private Date date;
 	
-	private int reportNumber;
+	private int reportNumber = 0;
 	
 	//constructor that will substantiate the symptoms
-	public Report(int a, int b, int c, int d, int e){
+	public Report(float a, float b, float c, float d, float e){
 		pain = a;
 		sleepy = b;
 		nausea = c;
@@ -25,9 +22,10 @@ public class Report {
 	}
 	
 	//basic constructor
-	public Report(){
-		
-	}
+	public Report()
+        {
+            
+        }
 	//the setter functions
 	public void setPain(float x){
 		pain = x;
@@ -103,8 +101,9 @@ public class Report {
 	}
 	*/
 	// how are we calculating the average?
-	public void calcAve(){
-		
+	public void calcAve(float a, float b, float c, float d, float e)
+        {
+		average = (a + b + c + d + e)/5;
 	}
 	// returns the average
 	public float getAverage(){

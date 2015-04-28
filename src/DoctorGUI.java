@@ -16,9 +16,9 @@ import java.awt.image.*;
 //The GUI so far looks okay; for now, this is the skeleton, when I get a better understanding of the other classes and when the Report classes are done, the functionality will be inputted.
 public class DoctorGUI extends LoginGUI{
         private JTabbedPane tab1,tab2, tab3;
-        private JPanel panel1, panel2, panel3, tabPanel;
+        private JPanel panel1, panel2, panel3, tabPanel,panel4;
         private static JFrame doctorFrame;
-        private JButton setThresh, editInfo;
+        private JButton setThresh, editInfo, logout;
         private JList list1;
         private JLabel label1, label2, firstName, lastName, careAge, careHeight, careWeight,specialty;
         private JSlider upThresh, lowThresh;
@@ -84,12 +84,18 @@ public class DoctorGUI extends LoginGUI{
                panel3.add(careAge);
                panel3.add(careHeight);
                panel3.add(specialty);
-               panel3.add(editInfo);
+               
+               
+               panel4 = new JPanel();
+               panel4.setLayout(new GridLayout(5,1));
+               logout = new JButton("Logout");
+               panel4.add(logout);
                
                tab1 = new JTabbedPane();                    //Our three tabs
                tab1.addTab("View Patients", panel1);
                tab1.addTab("User Info", panel3);
                tab1.addTab("Patient Threshold", panel2);
+               tab1.addTab("Logout", panel4);
                
                tabPanel = new JPanel();                     //Panel holding all of the tabs.
                tabPanel.setLayout(new GridLayout(1,1));
@@ -99,6 +105,15 @@ public class DoctorGUI extends LoginGUI{
                doctorFrame.setVisible(true);
                doctorFrame.setSize(600,600);
                doctorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+               
+               logout.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        logInFrame.setVisible(true);
+                        doctorFrame.setVisible(false);
+                    }
+                   
+               });
                
                editInfo.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e)
