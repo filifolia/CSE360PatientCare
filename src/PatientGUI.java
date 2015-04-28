@@ -9,16 +9,19 @@ import java.util.Scanner;
  * @author Jeremy
  */
 public class PatientGUI extends LoginGUI {
-    private JLabel pain, drowsiness, nausea, anxiety, depression,output;
+    private JLabel pain, drowsiness, nausea, anxiety, depression,output,confirm,avg;
     private JLabel patName, patAge, patHeight, phoNum, patWeight;
     private JPanel panel1, panel2, panel3, tabPanel;
     private JTabbedPane tab1;
-    final private JSlider pSlider, dSlider, nSlider, aSlider, depSlider;
-    private static JFrame patFrame;
+    final public JSlider pSlider, dSlider, nSlider, aSlider, depSlider;
+    public static JFrame patFrame;
     private JList list1;
     private JButton submit,edit;
     private DefaultListModel model;
+    private int repNum = 0;
+    private float avgVal = 0;
     private final int lowVal = 0,highVal = 10, defaultVal = 5;
+    public float pSliderV, dSliderV, nSliderV, aSliderV, depSliderV;
     
  
     
@@ -33,7 +36,7 @@ public class PatientGUI extends LoginGUI {
             list1 = new JList(model);
             
             panel1 = new JPanel();
-            panel1.setLayout(new GridLayout(11,1));               //Our write report panel
+            panel1.setLayout(new GridLayout(13,1));               //Our write report panel
             
             pSlider = new JSlider(JSlider.HORIZONTAL,lowVal,highVal,defaultVal);   //All five of the sliders
             pSlider.setMajorTickSpacing(10);
@@ -71,6 +74,8 @@ public class PatientGUI extends LoginGUI {
             anxiety = new JLabel("Enter your current level of anxiety: ");
             depression = new JLabel("Enter your current level of depression: ");
             submit = new JButton("Submit Report");
+            confirm = new JLabel("");
+            avg = new JLabel("");
             
             panel1.add(pain);
             panel1.add(pSlider);
@@ -83,6 +88,8 @@ public class PatientGUI extends LoginGUI {
             panel1.add(depression);
             panel1.add(depSlider);
             panel1.add(submit);
+            panel1.add(confirm);
+            panel1.add(avg);
             
             
             
@@ -137,7 +144,21 @@ public class PatientGUI extends LoginGUI {
            submit.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e)    //Honestly not really sure how I'm gonna make this work, 
                     {                                             //But after putting the report in a DefaultModelList, it did show up(albeit it didn't show the contents), so there's progress.
-                        Report report = new Report(pSlider.getValue(),dSlider.getValue(),nSlider.getValue(),aSlider.getValue(),depSlider.getValue());
+                        pSliderV = pSlider.getValue();
+                        dSliderV = dSlider.getValue();
+                        nSliderV = nSlider.getValue();
+                        aSliderV = aSlider.getValue();
+                        depSliderV = depSlider.getValue();
+                        
+                        Report report = new Report(pSliderV,dSliderV,nSliderV,aSliderV,depSliderV);
+                        patient.addReport(report);
+                        report.calcAve(pSliderV,dSliderV,nSliderV,aSliderV,depSliderV);
+                        repNum++;
+                        confirm.setText("Report number " + repNum + " successfully submitted!");
+                        confirm.setForeground(Color.green);
+                        avgVal = report.getAverage();
+                        avg.setText("The average threshold for this report was: " + avgVal);
+                        
                         
                     }
                    
@@ -247,4 +268,3 @@ public class PatientGUI extends LoginGUI {
     }
     
 }
-
