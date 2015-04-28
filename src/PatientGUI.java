@@ -11,12 +11,12 @@ import java.util.Scanner;
 public class PatientGUI extends LoginGUI {
     private JLabel pain, drowsiness, nausea, anxiety, depression,output,confirm,avg;
     private JLabel patName, patAge, patHeight, phoNum, patWeight;
-    private JPanel panel1, panel2, panel3, tabPanel;
+    private JPanel panel1, panel2, panel3, tabPanel,panel4;
     private JTabbedPane tab1;
     final public JSlider pSlider, dSlider, nSlider, aSlider, depSlider;
     public static JFrame patFrame;
     private JList list1;
-    private JButton submit,edit;
+    private JButton submit,edit,logout;
     private DefaultListModel model;
     private int repNum = 0;
     private float avgVal = 0;
@@ -111,17 +111,23 @@ public class PatientGUI extends LoginGUI {
             panel2.add(patHeight);
             panel2.add(patWeight);
             panel2.add(phoNum);
-            panel2.add(edit);
+            
            
             
             panel3 = new JPanel();                              //Our view report panel
             panel3.setLayout(new GridLayout(1,1));
             panel3.add(list1);
             
+            panel4 = new JPanel();
+            panel4.setLayout(new GridLayout(5,1));
+            logout = new JButton("Logout");
+            panel4.add(logout);
+            
             tab1 = new JTabbedPane();
             tab1.add("Write Report", panel1);
             tab1.add("User Info", panel2);
             tab1.add("View Reports", panel3);
+            tab1.add("Logout",panel4);
             
             tabPanel = new JPanel();
             tabPanel.setLayout(new GridLayout(1,1));
@@ -131,6 +137,15 @@ public class PatientGUI extends LoginGUI {
            patFrame.setVisible(true);
            patFrame.setSize(600,600);
            patFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+           
+           logout.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        logInFrame.setVisible(true);
+                        patFrame.setVisible(false);
+                    }
+                   
+               });
            
            edit.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e)
@@ -268,3 +283,4 @@ public class PatientGUI extends LoginGUI {
     }
     
 }
+
