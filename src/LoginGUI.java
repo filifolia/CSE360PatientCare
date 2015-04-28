@@ -26,10 +26,8 @@ public class LoginGUI extends JPanel{
 	public static CareGiver careGiver = new CareGiver();		//These two will keep track of our patient/caregiver info.
 	
 	public LoginGUI(){
-		PatientList = PatientList.loadPatientFile();
-		if(PatientList == null){
-			PatientList = new UserList();
-		}
+		PatientList = ListIO.loadPatientFile(); // Loads database
+		DoctorList = ListIO.loadCareGiverFile(); //Loads Database
 		logInFrame = new JFrame("Efferent Patient Care System");
 		ImagePanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 10, 10));
 		logInPanel = new JPanel(new GridBagLayout());
@@ -516,7 +514,7 @@ public class LoginGUI extends JPanel{
 					patient.setHeight(Integer.parseInt(heightField.getText()));
 					patient.setPhone(phoneField.getText());
 					PatientList.addElement(patient); //Adds the user to the hash table
-					PatientList.savePatientFile(PatientList);
+					ListIO.savePatientFile(PatientList);
 					new LoginGUI();
 					userInformationFrame.setVisible(false);
 				}
@@ -703,7 +701,8 @@ public class LoginGUI extends JPanel{
 					careGiver.setHeight(Integer.parseInt(heightField.getText()));
 					careGiver.setPhone(phoneField.getText());
 					careGiver.setDegree(specialtyField.getText());
-					DoctorList.addElement(careGiver); //Adds the user to the hash table. Not sure if Caregivers are also added to hashtable or not.
+					DoctorList.addElement(careGiver); //Adds the user to the hash table. Not sure if Caregivers are also added to hashtable or not.					
+					ListIO.saveCareGiverFile(DoctorList); //Saves and update the doctor list
 					new LoginGUI();
 					userInformationFrame.setVisible(false);
 

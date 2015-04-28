@@ -3,11 +3,11 @@
 //to store users, since this program is meant to cover long term and chronic
 //illnesses. 
 
-import java.io.Serializable;
+import java.io.*;
 
 public class UserList implements Serializable
 {
-	private User[] List;
+	User[] List;
 	final private int size = 100;
 	
 	public UserList()
@@ -111,10 +111,6 @@ public class UserList implements Serializable
 		return List[index];
 	}
 	
-	//Saves all detail of exisitng users to a text save file
-	public void saveUserFile()
-	{
-		
-	}
-	
 }
+	
+	
