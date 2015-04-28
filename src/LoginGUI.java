@@ -331,8 +331,11 @@ public class LoginGUI extends JPanel{
 						logInFrame1.setVisible(false);	
 					}
 					else{
+						careGiver.setUsername(userName.getText());
+						careGiver.setPassword(password);
+						if(doctorRadio.isSelected()){
 						doctorUserInformationGUI();
-						logInFrame1.setVisible(false);
+						logInFrame1.setVisible(false);}
 					}
 					
 				}
