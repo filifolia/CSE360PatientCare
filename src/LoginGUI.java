@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class LoginGUI extends JPanel{
+	private static final long serialVersionUID = 1L;
 	private static JFrame logInFrame1, userInformationFrame;
 	private static JLabel topLabel, userNameLabel, passwordLabel, confirmPasswordLabel, typeLabel, errorMessage;
 	private static JPanel logInPanel, ImagePanel;

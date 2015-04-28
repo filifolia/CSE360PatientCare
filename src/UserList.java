@@ -7,6 +7,7 @@ import java.io.*;
 
 public class UserList implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private User[] List;
 	final private int size = 100;
 	
@@ -111,6 +112,11 @@ public class UserList implements Serializable
 		return List[index];
 	}
 	
+	//Setter Method that sets the element in specified index.
+	public void setUser(int index, User user)
+	{
+		List[index] = user;
+	}
 }
 	
 	

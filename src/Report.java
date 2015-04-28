@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 public class Report implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private float pain;
 	private float sleepy;
 	private float nausea;

@@ -15,7 +15,8 @@ import java.awt.image.*;
 
 //The GUI so far looks okay; for now, this is the skeleton, when I get a better understanding of the other classes and when the Report classes are done, the functionality will be inputted.
 public class DoctorGUI extends LoginGUI{
-        private JTabbedPane tab1,tab2, tab3;
+		private static final long serialVersionUID = 1L;
+		private JTabbedPane tab1,tab2, tab3;
         private JPanel panel1, panel2, panel3, tabPanel,panel4;
         private static JFrame doctorFrame;
         private JButton setThresh, editInfo, logout;
